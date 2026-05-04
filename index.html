@@ -1,0 +1,3703 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>氣道管理教學 — 第一階段</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+TC:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #141720;
+  --surface2: #1c2030;
+  --surface3: #242840;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --text2: #8a90a8;
+  --text3: #555b75;
+  --red: #e05252;
+  --red-bg: rgba(224,82,82,0.10);
+  --red-border: rgba(224,82,82,0.25);
+  --orange: #e08c3c;
+  --orange-bg: rgba(224,140,60,0.10);
+  --orange-border: rgba(224,140,60,0.25);
+  --blue: #4a90d9;
+  --blue-bg: rgba(74,144,217,0.10);
+  --blue-border: rgba(74,144,217,0.25);
+  --teal: #3abf9a;
+  --teal-bg: rgba(58,191,154,0.10);
+  --teal-border: rgba(58,191,154,0.25);
+  --yellow: #d4b84a;
+  --yellow-bg: rgba(212,184,74,0.10);
+  --purple: #9b72e0;
+  --purple-bg: rgba(155,114,224,0.10);
+  --purple-border: rgba(155,114,224,0.25);
+  --font: 'IBM Plex Sans TC', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+  --radius: 8px;
+  --radius-lg: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ── HEADER ── */
+.site-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.site-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--mono);
+}
+.site-title span { color: var(--teal); }
+.header-divider { width: 1px; height: 20px; background: var(--border); margin: 0 20px; }
+.header-badge {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ── NAV TABS ── */
+.nav-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+}
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-tab:hover { color: var(--text2); }
+.nav-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+/* ── MAIN LAYOUT ── */
+.main { max-width: 1080px; margin: 0 auto; padding: 40px 32px 80px; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* ── TYPOGRAPHY ── */
+h1 { font-size: 26px; font-weight: 600; color: var(--text); }
+h2 { font-size: 18px; font-weight: 500; color: var(--text); margin-bottom: 16px; }
+h3 { font-size: 15px; font-weight: 500; color: var(--text2); margin-bottom: 10px; }
+p { color: var(--text2); line-height: 1.75; }
+
+.section-header {
+  margin-bottom: 32px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.section-header h1 { margin-bottom: 8px; }
+.section-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--teal);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.card-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+/* ── ALERT LEVELS ── */
+.alert {
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  border-left: 3px solid;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.alert.red { background: var(--red-bg); border-color: var(--red); color: #f0b8b8; }
+.alert.orange { background: var(--orange-bg); border-color: var(--orange); color: #f0cfa8; }
+.alert.blue { background: var(--blue-bg); border-color: var(--blue); color: #b0ccee; }
+.alert.teal { background: var(--teal-bg); border-color: var(--teal); color: #a0dece; }
+
+/* ── ALGORITHM FLOWCHART ── */
+.algo-container { position: relative; }
+.algo-node {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+  position: relative;
+}
+.algo-node:hover { border-color: var(--teal-border); background: var(--surface3); }
+.algo-node.node-start { border-color: var(--blue-border); background: var(--blue-bg); }
+.algo-node.node-decision { border-color: var(--orange-border); background: var(--orange-bg); }
+.algo-node.node-action { border-color: var(--teal-border); background: var(--teal-bg); }
+.algo-node.node-emergency { border-color: var(--red-border); background: var(--red-bg); }
+.algo-node.node-end { border-color: var(--border); background: var(--surface3); }
+
+.algo-node-label {
+  font-size: 13px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+}
+.algo-node-sub {
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+.algo-expand-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: transform .2s;
+}
+.algo-node.expanded .algo-expand-btn { transform: translateY(-50%) rotate(45deg); }
+
+.algo-detail {
+  display: none;
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 16px 18px;
+  font-size: 13px;
+  color: var(--text2);
+}
+.algo-detail.open { display: block; }
+.algo-detail ul { padding-left: 16px; }
+.algo-detail ul li { margin-bottom: 6px; }
+
+.algo-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  color: var(--text3);
+  font-size: 18px;
+  position: relative;
+}
+.algo-arrow-label {
+  position: absolute;
+  right: calc(50% - 80px);
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text3);
+  background: var(--bg);
+  padding: 0 6px;
+}
+
+.algo-branch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.algo-branch-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.branch-yes .algo-branch-label { color: var(--teal); }
+.branch-no .algo-branch-label { color: var(--orange); }
+
+.plan-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.plan-tab {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--text2);
+  font-family: var(--font);
+  transition: all .2s;
+}
+.plan-tab.active-plan { border-color: var(--teal-border); background: var(--teal-bg); color: var(--teal); }
+.plan-content { display: none; }
+.plan-content.active { display: block; }
+
+/* ── CASE CARDS ── */
+.case-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.case-header {
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+.case-badge {
+  font-size: 10px;
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.case-badge.difficult { background: var(--orange-bg); color: var(--orange); border: 1px solid var(--orange-border); }
+.case-badge.obstetric { background: var(--purple-bg); color: var(--purple); border: 1px solid var(--purple-border); }
+.case-badge.head-neck { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); }
+.case-badge.airborne { background: var(--teal-bg); color: var(--teal); border: 1px solid var(--teal-border); }
+
+.case-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; }
+.case-summary { font-size: 13px; color: var(--text2); }
+.case-toggle { color: var(--text3); font-size: 18px; transition: transform .3s; flex-shrink: 0; }
+.case-card.open .case-toggle { transform: rotate(45deg); }
+
+.case-body { display: none; border-top: 1px solid var(--border); }
+.case-card.open .case-body { display: block; }
+
+.case-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 24px; }
+.case-tab {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text3);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  font-family: var(--font);
+  transition: color .2s, border-color .2s;
+}
+.case-tab:hover { color: var(--text2); }
+.case-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+.case-content { padding: 24px; display: none; }
+.case-content.active { display: block; }
+
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 16px 0;
+}
+.vital-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+}
+.vital-label { font-size: 10px; font-family: var(--mono); color: var(--text3); margin-bottom: 4px; }
+.vital-value { font-size: 18px; font-weight: 500; color: var(--text); }
+.vital-unit { font-size: 11px; color: var(--text3); }
+
+.info-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+.info-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.info-table td:first-child { color: var(--text3); font-family: var(--mono); font-size: 12px; width: 30%; white-space: nowrap; }
+.info-table td:last-child { color: var(--text); }
+
+.risk-bar { margin: 12px 0; }
+.risk-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+.risk-bar-track { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.risk-bar-fill { height: 100%; border-radius: 3px; transition: width .6s; }
+
+.checklist { list-style: none; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  color: var(--text2);
+  cursor: pointer;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li.checked { color: var(--text3); text-decoration: line-through; }
+.check-box {
+  width: 18px; height: 18px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  transition: all .2s;
+}
+.checklist li.checked .check-box { background: var(--teal-bg); border-color: var(--teal-border); color: var(--teal); }
+
+/* ── QUIZ ── */
+.quiz-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.quiz-type-badge {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+.quiz-type-badge.scenario { background: var(--orange-bg); color: var(--orange); }
+.quiz-type-badge.knowledge { background: var(--blue-bg); color: var(--blue); }
+
+.quiz-stem { font-size: 16px; color: var(--text); margin-bottom: 8px; line-height: 1.6; }
+.quiz-context { font-size: 13px; color: var(--text2); background: var(--surface2); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 20px; border-left: 3px solid var(--border2); }
+.quiz-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.quiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all .2s;
+  text-align: left;
+  font-family: var(--font);
+  width: 100%;
+  color: var(--text2);
+  font-size: 14px;
+}
+.quiz-option:hover { border-color: var(--border2); background: var(--surface3); }
+.quiz-option.selected-correct { border-color: var(--teal-border); background: var(--teal-bg); color: var(--teal); }
+.quiz-option.selected-wrong { border-color: var(--red-border); background: var(--red-bg); color: var(--red); }
+.quiz-option.revealed-correct { border-color: var(--teal-border); background: var(--teal-bg); color: var(--teal); }
+.quiz-option.disabled { pointer-events: none; opacity: 0.5; }
+.option-key {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--surface3);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.quiz-explanation {
+  display: none;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.75;
+}
+.quiz-explanation.open { display: block; }
+.quiz-explanation strong { color: var(--teal); }
+
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; }
+.quiz-progress { font-size: 12px; font-family: var(--mono); color: var(--text3); }
+.quiz-score { font-size: 13px; color: var(--text2); }
+.score-val { color: var(--teal); font-weight: 500; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  font-family: var(--font);
+  border: none;
+}
+.btn-primary { background: var(--teal); color: #0d0f14; }
+.btn-primary:hover { background: #4fd4ac; }
+.btn-outline { background: transparent; border: 1px solid var(--border2); color: var(--text2); }
+.btn-outline:hover { border-color: var(--teal-border); color: var(--teal); }
+.btn-sm { padding: 6px 14px; font-size: 13px; }
+
+/* ── TAG ── */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  font-family: var(--mono);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin: 2px;
+}
+.tag-red { background: var(--red-bg); color: var(--red); }
+.tag-orange { background: var(--orange-bg); color: var(--orange); }
+.tag-blue { background: var(--blue-bg); color: var(--blue); }
+.tag-teal { background: var(--teal-bg); color: var(--teal); }
+
+/* ── PROGRESS ── */
+.progress-track { display: flex; gap: 4px; margin-bottom: 24px; }
+.progress-step {
+  height: 3px;
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 2px;
+  transition: background .3s;
+}
+.progress-step.done { background: var(--teal); }
+.progress-step.current { background: var(--blue); }
+
+/* ── CICO BOX ── */
+.cico-box {
+  background: var(--red-bg);
+  border: 2px solid var(--red);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.cico-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--red);
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+/* ── NURSING ROLE BOX ── */
+.nursing-box {
+  background: var(--blue-bg);
+  border: 1px solid var(--blue-border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-top: 16px;
+}
+.nursing-box-title {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--blue);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.nursing-box ul { padding-left: 16px; font-size: 14px; color: var(--text2); }
+.nursing-box ul li { margin-bottom: 6px; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+/* responsive */
+@media (max-width: 700px) {
+  .main { padding: 24px 16px 60px; }
+  .card-grid, .card-grid-3, .algo-branch { grid-template-columns: 1fr; }
+  .vitals-grid { grid-template-columns: 1fr 1fr; }
+  .nav-bar { padding: 0 16px; }
+  .site-header { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <span class="site-title"><span>AIRWAY</span> · 麻醉護理教學</span>
+  <div class="header-divider"></div>
+  <span class="header-badge">Phase 01 · 困難氣道 &amp; 特殊族群</span>
+</header>
+
+<nav class="nav-bar">
+  <button class="nav-tab active" onclick="switchTab('algo')">
+    <span class="nav-dot"></span>困難氣道演算法
+  </button>
+  <button class="nav-tab" onclick="switchTab('cases')">
+    <span class="nav-dot"></span>特殊族群情境
+  </button>
+  <button class="nav-tab" onclick="switchTab('rsi')">
+    <span class="nav-dot"></span>RSI 時序軸
+  </button>
+  <button class="nav-tab" onclick="switchTab('assess')">
+    <span class="nav-dot"></span>氣道評估工具
+  </button>
+  <button class="nav-tab" onclick="switchTab('anatomy')">
+    <span class="nav-dot"></span>氣道解剖
+  </button>
+  <button class="nav-tab" onclick="switchTab('equipment')">
+    <span class="nav-dot"></span>器械圖鑑
+  </button>
+  <button class="nav-tab" onclick="switchTab('extubation')">
+    <span class="nav-dot"></span>拔管模組
+  </button>
+  <button class="nav-tab" onclick="switchTab('quiz')">
+    <span class="nav-dot"></span>測驗
+  </button>
+</nav>
+
+<main class="main">
+
+<!-- ══════════════════════════════════════════════════
+     TAB 1: 困難氣道演算法 (ASA 2022)
+══════════════════════════════════════════════════ -->
+<section id="tab-algo" class="section active">
+  <div class="section-header">
+    <div class="section-label">ASA 2022 困難氣道管理指引</div>
+    <h1>困難氣道演算法</h1>
+    <p>依據 American Society of Anesthesiologists 2022 Practice Guidelines。點擊各節點展開詳細說明與護理師角色。</p>
+  </div>
+
+  <div class="card" style="margin-bottom:24px;">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+      <span class="tag tag-blue">藍色 = 評估/決策</span>
+      <span class="tag tag-teal">綠色 = 標準行動</span>
+      <span class="tag tag-orange">橘色 = 困難/替代</span>
+      <span class="tag tag-red">紅色 = 緊急</span>
+    </div>
+    <p style="font-size:13px;">此演算法適用於<strong style="color:var(--text)">成人</strong>。小兒氣道特殊考量請參考「特殊族群情境」頁面。</p>
+  </div>
+
+  <!-- STEP 0: Initial assessment -->
+  <div class="algo-node node-start" onclick="toggleNode(this)">
+    <span class="algo-node-label">麻醉前氣道評估</span>
+    <span class="algo-node-sub">Pre-anesthesia airway assessment</span>
+    <button class="algo-expand-btn">+</button>
+  </div>
+  <div class="algo-detail">
+    <p style="margin-bottom:12px;">整合多項評估工具，綜合判斷困難氣道風險：</p>
+    <ul>
+      <li><strong>LEMON</strong>：L=外觀、E=3-3-2法則、M=Mallampati、O=阻塞、N=頸部活動度</li>
+      <li><strong>Mallampati I~IV</strong>：Class III/IV 與困難喉鏡視野相關</li>
+      <li><strong>其他警示</strong>：頸部放射治療史、阻塞性睡眠呼吸中止症、BMI &gt;35、下頷退縮</li>
+      <li><strong>護理師角色</strong>：確認評估記錄已完成並於麻醉前簡報時提出；確認困難氣道車位置與設備完整性</li>
+    </ul>
+  </div>
+
+  <div class="algo-arrow">↓
+    <span class="algo-arrow-label">困難氣道預測？</span>
+  </div>
+
+  <!-- BRANCH: 預期 vs 非預期 -->
+  <div class="algo-branch">
+    <div class="branch-yes">
+      <div class="algo-branch-label">預期困難氣道</div>
+      <!-- Awake vs asleep -->
+      <div class="algo-node node-decision" onclick="toggleNode(this)" style="margin-bottom:8px;">
+        <span class="algo-node-label">考慮清醒插管 vs 全麻後插管</span>
+        <span class="algo-node-sub">Awake intubation vs induction then intubation</span>
+        <button class="algo-expand-btn">+</button>
+      </div>
+      <div class="algo-detail">
+        <p style="margin-bottom:10px;"><strong style="color:var(--orange)">優先考慮清醒插管的情境：</strong></p>
+        <ul>
+          <li>多重困難氣道指標並存</li>
+          <li>飽胃（嗜睡、腸阻塞）</li>
+          <li>困難面罩通氣且困難插管</li>
+          <li>病人無法耐受短暫缺氧</li>
+          <li>口腔癌術後、頭頸部放射治療後</li>
+        </ul>
+        <div class="nursing-box">
+          <div class="nursing-box-title">護理師準備清單</div>
+          <ul>
+            <li>纖維支氣管鏡（FOB）或視頻喉鏡備妥</li>
+            <li>局部麻醉藥（Lidocaine spray/nebulization）</li>
+            <li>鎮靜藥（Dexmedetomidine / 低劑量 Midazolam）依醫囑備妥</li>
+            <li>必要時通知耳鼻喉科備術中支援</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="algo-arrow" style="height:20px;">↓</div>
+
+      <div class="algo-node node-action" onclick="toggleNode(this)">
+        <span class="algo-node-label">清醒插管流程</span>
+        <span class="algo-node-sub">Awake intubation</span>
+        <button class="algo-expand-btn">+</button>
+      </div>
+      <div class="algo-detail">
+        <p style="margin-bottom:10px;"><strong style="color:var(--teal)">標準步驟：</strong></p>
+        <ul>
+          <li>充分表面麻醉：Lidocaine 噴霧 → 等待 3-5 分鐘</li>
+          <li>輕度鎮靜（保留自主呼吸）</li>
+          <li>選擇工具：纖維支氣管鏡（首選）/ 視頻喉鏡 / Awake direct laryngoscopy</li>
+          <li>插管成功後確認位置（EtCO₂ + 胸部起伏）</li>
+          <li>確認後才可給予肌肉鬆弛劑與誘導藥</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="branch-no">
+      <div class="algo-branch-label">非預期困難氣道</div>
+      <div class="algo-node node-decision" onclick="toggleNode(this)" style="margin-bottom:8px;">
+        <span class="algo-node-label">誘導後無法插管</span>
+        <span class="algo-node-sub">Cannot intubate after induction</span>
+        <button class="algo-expand-btn">+</button>
+      </div>
+      <div class="algo-detail">
+        <p style="margin-bottom:8px;">啟動困難氣道應變流程，立即：</p>
+        <ul>
+          <li>呼叫支援（二線麻醉醫師或 ENT）</li>
+          <li>面罩通氣維持氧合</li>
+          <li>考慮是否喚醒病人</li>
+        </ul>
+        <div class="nursing-box">
+          <div class="nursing-box-title">護理師立即行動</div>
+          <ul>
+            <li>啟動緊急呼叫系統</li>
+            <li>推出困難氣道車</li>
+            <li>記錄嘗試次數與時間</li>
+            <li>準備 Sugammadex（逆轉 Rocuronium）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PLAN A/B/C/D tabs -->
+  <h2 style="margin-bottom:16px;">Plan A → B → C → D 決策流程</h2>
+  <div class="plan-tabs">
+    <button class="plan-tab active-plan" onclick="switchPlan('A', this)">Plan A</button>
+    <button class="plan-tab" onclick="switchPlan('B', this)">Plan B</button>
+    <button class="plan-tab" onclick="switchPlan('C', this)">Plan C</button>
+    <button class="plan-tab" onclick="switchPlan('D', this)">Plan D · CICO</button>
+  </div>
+
+  <div id="plan-A" class="plan-content active">
+    <div class="card">
+      <h3 style="color:var(--teal);margin-bottom:12px;">Plan A — 直接喉鏡 / 視頻喉鏡插管</h3>
+      <div class="alert blue"><span class="alert-icon">◎</span><div>最大嘗試次數：<strong>3 次</strong>（含不同術者），超過即轉 Plan B。每次嘗試前重新評估可優化之處。</div></div>
+      <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2;">
+        <li>體位優化：Ramped position（肥胖病人）/ 頸部伸展</li>
+        <li>BURP 手法 / 外部喉部壓迫（ELM）</li>
+        <li>更換喉鏡片型號或換用視頻喉鏡</li>
+        <li>使用 Stylet 或 Bougie 輔助</li>
+      </ul>
+      <div class="nursing-box" style="margin-top:12px;">
+        <div class="nursing-box-title">護理師角色</div>
+        <ul>
+          <li>執行 BURP / ELM（依醫師指示）</li>
+          <li>持續監測 SpO₂，低於 94% 立即告知</li>
+          <li>記錄每次嘗試工具、視野 Cormack-Lehane 分級</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="plan-B" class="plan-content">
+    <div class="card">
+      <h3 style="color:var(--orange);margin-bottom:12px;">Plan B — 聲門上氣道裝置（SAD）</h3>
+      <div class="alert orange"><span class="alert-icon">▲</span><div>Plan A 失敗後，首要目標為<strong>維持氧合</strong>，而非繼續嘗試插管。</div></div>
+      <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2;">
+        <li>放置 Second-generation SAD（如 LMA Supreme、i-gel）</li>
+        <li>確認通氣有效後評估：手術可否在 SAD 下進行？</li>
+        <li>若需插管：可透過 SAD 使用 Aintree catheter + FOB 引導換管</li>
+        <li>評估是否喚醒病人，擇期再處理</li>
+      </ul>
+      <div class="nursing-box" style="margin-top:12px;">
+        <div class="nursing-box-title">護理師角色</div>
+        <ul>
+          <li>立即備妥合適型號 LMA（依體重）</li>
+          <li>通知術者目前氣道狀況，協調是否繼續手術</li>
+          <li>若喚醒病人：準備拮抗藥物、準備解釋後續計畫給病人</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="plan-C" class="plan-content">
+    <div class="card">
+      <h3 style="color:var(--orange);margin-bottom:12px;">Plan C — 面罩通氣 + 喚醒病人</h3>
+      <div class="alert orange"><span class="alert-icon">▲</span><div>SAD 放置失敗時，嘗試面罩通氣。若可維持氧合，<strong>喚醒病人</strong>是最安全的選擇。</div></div>
+      <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2;">
+        <li>雙人面罩通氣（兩手固定面罩 + 一人擠球）</li>
+        <li>口咽 / 鼻咽氣道輔助器</li>
+        <li>給予 Sugammadex 逆轉肌鬆</li>
+        <li>病人清醒後重新評估，計畫清醒插管或其他策略</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="plan-D" class="plan-content">
+    <div class="cico-box">
+      <div class="cico-title">CICO — Cannot Intubate, Cannot Oxygenate</div>
+      <div class="alert red" style="margin-bottom:12px;"><span class="alert-icon">!</span><div><strong>生命威脅情境。</strong>面罩通氣與 SAD 均失敗，SpO₂ 持續下降。立即進行緊急侵入性氣道建立。</div></div>
+      <ul style="padding-left:20px;font-size:14px;color:#f0b8b8;line-height:2.2;">
+        <li><strong>首選</strong>：環甲膜切開術（Cricothyrotomy）— Scalpel-Bougie-Tube 技術</li>
+        <li>Needle cricothyrotomy 為暫時過渡，不能替代 surgical airway</li>
+        <li>若已有術前氣切計畫：立即執行緊急氣切</li>
+        <li>全隊呼叫：ENT / 外科緊急支援</li>
+      </ul>
+      <div class="nursing-box" style="margin-top:16px;background:rgba(255,255,255,0.03);border-color:var(--red-border);">
+        <div class="nursing-box-title" style="color:var(--red);">護理師緊急行動</div>
+        <ul style="color:#f0b8b8;">
+          <li>立即呼叫緊急代碼，通知外科 / ENT</li>
+          <li>備妥環甲膜切開包 / 緊急氣切包</li>
+          <li>推算 Succinylcholine / Ketamine 緊急用量</li>
+          <li>記錄時間軸：SpO₂ 開始下降時間、每次介入時間</li>
+          <li>體外心臟按壓準備（若心跳停止）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     TAB 2: 特殊族群情境
+══════════════════════════════════════════════════ -->
+<section id="tab-cases" class="section">
+  <div class="section-header">
+    <div class="section-label">Special Population Cases</div>
+    <h1>特殊族群情境案例</h1>
+    <p>點擊案例展開完整病史、氣道評估、決策流程與護理師角色。</p>
+  </div>
+
+  <!-- CASE 1: 困難插管 -->
+  <div class="case-card" id="case1">
+    <div class="case-header" onclick="toggleCase('case1')">
+      <div>
+        <span class="case-badge difficult">困難氣道 · 預期</span>
+        <div class="case-title" style="margin-top:10px;">陳先生，58 歲，全髖關節置換術</div>
+        <div class="case-summary">BMI 38，Mallampati IV，OSAS，頸部粗短。術前會診判定為預期困難氣道。</div>
+      </div>
+      <span class="case-toggle">+</span>
+    </div>
+    <div class="case-body">
+      <div class="case-tabs">
+        <button class="case-tab active" onclick="switchCaseTab('case1','info')">病史摘要</button>
+        <button class="case-tab" onclick="switchCaseTab('case1','assess')">氣道評估</button>
+        <button class="case-tab" onclick="switchCaseTab('case1','flow')">決策流程</button>
+        <button class="case-tab" onclick="switchCaseTab('case1','role')">護理師角色</button>
+      </div>
+      <div id="case1-info" class="case-content active">
+        <table class="info-table">
+          <tr><td>年齡/性別</td><td>58 歲，男性</td></tr>
+          <tr><td>手術</td><td>右全髖關節置換術，預計時長 2.5 小時</td></tr>
+          <tr><td>BMI</td><td>38 kg/m²</td></tr>
+          <tr><td>共病</td><td>OSAS（CPAP 使用中）、高血壓、第二型糖尿病</td></tr>
+          <tr><td>過去麻醉史</td><td>5 年前膽囊切除術，麻醉記錄：插管困難，需第二術者及 Bougie 輔助</td></tr>
+          <tr><td>目前用藥</td><td>Metformin（術前已停）、Amlodipine、CPAP 9 cmH₂O</td></tr>
+        </table>
+        <div class="vitals-grid">
+          <div class="vital-item"><div class="vital-label">BP</div><div class="vital-value">148<span class="vital-unit">/90</span></div></div>
+          <div class="vital-item"><div class="vital-label">HR</div><div class="vital-value">82<span class="vital-unit">bpm</span></div></div>
+          <div class="vital-item"><div class="vital-label">SpO₂</div><div class="vital-value">96<span class="vital-unit">%</span></div></div>
+          <div class="vital-item"><div class="vital-label">BMI</div><div class="vital-value">38<span class="vital-unit">kg/m²</span></div></div>
+        </div>
+      </div>
+      <div id="case1-assess" class="case-content">
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>Mallampati</span><span style="color:var(--red);">Class IV</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:100%;background:var(--red);"></div></div>
+        </div>
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>張口度</span><span style="color:var(--orange);">2.5 cm（< 3cm）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:35%;background:var(--orange);"></div></div>
+        </div>
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>頸部活動度</span><span style="color:var(--orange);">受限（約 30°）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:30%;background:var(--orange);"></div></div>
+        </div>
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>甲頦距離</span><span style="color:var(--orange);">5 cm（< 6cm）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:40%;background:var(--orange);"></div></div>
+        </div>
+        <div class="alert red" style="margin-top:16px;"><span class="alert-icon">!</span><div>前次麻醉記錄顯示困難插管。此案例應視為<strong>確定困難氣道</strong>，計畫清醒插管（Awake intubation）。</div></div>
+        <div class="alert orange"><span class="alert-icon">▲</span><div>OSAS 患者去飽和速度快。預充氧時間需充足（≥3 分鐘 100% O₂），採 Ramped position。</div></div>
+      </div>
+      <div id="case1-flow" class="case-content">
+        <div class="alert blue"><span class="alert-icon">◎</span><div><strong>決策：清醒纖維支氣管鏡插管（Awake FOB intubation）</strong></div></div>
+        <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2.2;margin-top:12px;">
+          <li>充分術前說明，取得病人配合</li>
+          <li>Glycopyrrolate 0.2mg IM 減少分泌物（插管前 30 分鐘）</li>
+          <li>Lidocaine 霧化吸入（4% × 4mL）進行氣道表面麻醉</li>
+          <li>環甲膜穿刺注射 Lidocaine 2% 2mL（聲門下麻醉）</li>
+          <li>Dexmedetomidine 輕度鎮靜（0.5-1 mcg/kg over 10min）</li>
+          <li>FOB 引導下插入 ETT 7.5（男性）</li>
+          <li>確認 EtCO₂ 波形、雙側呼吸音後，給予誘導藥</li>
+        </ul>
+        <div class="alert teal" style="margin-top:12px;"><span class="alert-icon">✓</span><div>備用：若 FOB 失敗，改用 GlideScope + Bougie，並告知術者可能需評估局部或脊椎麻醉替代方案。</div></div>
+      </div>
+      <div id="case1-role" class="case-content">
+        <h3 style="margin-bottom:12px;">術前準備</h3>
+        <ul class="checklist" id="cl-case1-pre">
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認困難氣道車已就位並完整</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥 FOB（確認影像系統功能正常）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥 GlideScope 作為備用</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>準備 Lidocaine 霧化吸入設備</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>告知刷手護理師手術開始時間可能延遲</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認 Sugammadex 備妥（若改為 RSI 後緊急逆轉）</li>
+        </ul>
+        <h3 style="margin-top:20px;margin-bottom:12px;">插管中</h3>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>持續監測 SpO₂，低於 94% 立即告知麻醉醫師</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>記錄每次嘗試工具與結果</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>依指示協助 BURP / ELM</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 2: 孕婦 -->
+  <div class="case-card" id="case2">
+    <div class="case-header" onclick="toggleCase('case2')">
+      <div>
+        <span class="case-badge obstetric">產科 · 緊急剖腹</span>
+        <div class="case-title" style="margin-top:10px;">林女士，32 歲，G2P1，34 週急症剖腹產</div>
+        <div class="case-summary">胎盤早期剝離，胎兒窘迫，需緊急全身麻醉。飽胃高風險，氣道評估受限。</div>
+      </div>
+      <span class="case-toggle">+</span>
+    </div>
+    <div class="case-body">
+      <div class="case-tabs">
+        <button class="case-tab active" onclick="switchCaseTab('case2','info')">病史摘要</button>
+        <button class="case-tab" onclick="switchCaseTab('case2','assess')">氣道評估</button>
+        <button class="case-tab" onclick="switchCaseTab('case2','flow')">決策流程</button>
+        <button class="case-tab" onclick="switchCaseTab('case2','role')">護理師角色</button>
+      </div>
+      <div id="case2-info" class="case-content active">
+        <table class="info-table">
+          <tr><td>孕週</td><td>34 週 + 2 天，G2P1</td></tr>
+          <tr><td>緊急程度</td><td>Category 1（胎兒窘迫，目標 30 分鐘內娩出）</td></tr>
+          <tr><td>最後進食</td><td>2 小時前（飽胃）</td></tr>
+          <tr><td>共病</td><td>輕度子癇前症（BP 148/95）</td></tr>
+          <tr><td>麻醉史</td><td>第一胎：脊椎麻醉順利</td></tr>
+          <tr><td>已處置</td><td>子宮左移 15°，IV access × 2，備血申請中</td></tr>
+        </table>
+        <div class="vitals-grid">
+          <div class="vital-item"><div class="vital-label">BP</div><div class="vital-value">148<span class="vital-unit">/95</span></div></div>
+          <div class="vital-item"><div class="vital-label">HR</div><div class="vital-value">104<span class="vital-unit">bpm</span></div></div>
+          <div class="vital-item"><div class="vital-label">SpO₂</div><div class="vital-value">99<span class="vital-unit">%</span></div></div>
+          <div class="vital-item"><div class="vital-label">FHR</div><div class="vital-value">88<span class="vital-unit">bpm</span></div></div>
+        </div>
+      </div>
+      <div id="case2-assess" class="case-content">
+        <div class="alert red"><span class="alert-icon">!</span><div><strong>孕婦氣道的三大挑戰：</strong><br>1. 組織水腫（Mallampati 在孕期可上升一級）<br>2. 去飽和極快（FRC 減少 20-30%、氧耗增加）<br>3. 誤吸風險（賁門括約肌張力降低、腹壓增高）</div></div>
+        <div class="alert orange"><span class="alert-icon">▲</span><div>緊急剖腹產下氣道評估時間有限。即使評估正常，仍應以 RSI 進行，並備妥困難氣道流程。</div></div>
+        <div class="risk-bar" style="margin-top:16px;">
+          <div class="risk-bar-label"><span>誤吸風險</span><span style="color:var(--red);">高（飽胃 + 孕婦）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:85%;background:var(--red);"></div></div>
+        </div>
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>去飽和速度</span><span style="color:var(--red);">快（FRC 下降）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:80%;background:var(--red);"></div></div>
+        </div>
+      </div>
+      <div id="case2-flow" class="case-content">
+        <div class="alert blue"><span class="alert-icon">◎</span><div><strong>決策：緊急 RSI（Modified RSI for obstetrics）</strong></div></div>
+        <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2.2;margin-top:12px;">
+          <li>子宮左移（Left uterine displacement，15-30°）全程維持</li>
+          <li>100% O₂ 預充氧 ≥ 3 分鐘（或 8 次深呼吸）</li>
+          <li>Sodium citrate 0.3M 30mL PO（若時間允許）</li>
+          <li><strong>誘導</strong>：Ketamine 1-1.5 mg/kg（或 Propofol，視血壓）+ Succinylcholine 1.5 mg/kg</li>
+          <li>Cricoid pressure（Sellick's maneuver）：誘導開始 → 確認插管成功後解除</li>
+          <li>插管確認：EtCO₂ + 雙側呼吸音，立即固定</li>
+          <li>維持 EtCO₂ 30-35 mmHg（不同於非孕婦，避免過度通氣影響胎盤血流）</li>
+        </ul>
+        <div class="alert teal" style="margin-top:12px;"><span class="alert-icon">✓</span><div>插管失敗時：嘗試 LMA（second-gen）維持氧合。若氧合可維持，評估是否在 SAD 下繼續緊急手術。</div></div>
+      </div>
+      <div id="case2-role" class="case-content">
+        <h3 style="margin-bottom:12px;">緊急 RSI 護理師準備清單</h3>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認病床已調整左傾 15°（子宮左移）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥 Succinylcholine + Ketamine（計算體重）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥 Cricoid pressure 手法（由護理師執行）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認困難氣道車就位，備妥 LMA</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>新生兒科 / 兒科已通知</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥縮宮素（Oxytocin）娩出後使用</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>記錄子宮切開時間與嬰兒娩出時間</li>
+        </ul>
+        <div class="alert orange" style="margin-top:16px;"><span class="alert-icon">▲</span><div><strong>Cricoid pressure 注意</strong>：用食中無名三指施壓於環狀軟骨，向後壓迫食道。由麻醉醫師下令開始，確認插管成功後解除。施壓過強會影響插管視野。</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 3: 口腔癌術後 -->
+  <div class="case-card" id="case3">
+    <div class="case-header" onclick="toggleCase('case3')">
+      <div>
+        <span class="case-badge head-neck">頭頸 · 解剖變形</span>
+        <div class="case-title" style="margin-top:10px;">王先生，62 歲，口腔癌術後重建手術</div>
+        <div class="case-summary">舌癌切除+皮瓣重建術後 18 個月，接受放射治療。張口度 1.5 cm，解剖明顯變形。</div>
+      </div>
+      <span class="case-toggle">+</span>
+    </div>
+    <div class="case-body">
+      <div class="case-tabs">
+        <button class="case-tab active" onclick="switchCaseTab('case3','info')">病史摘要</button>
+        <button class="case-tab" onclick="switchCaseTab('case3','assess')">氣道評估</button>
+        <button class="case-tab" onclick="switchCaseTab('case3','flow')">決策流程</button>
+        <button class="case-tab" onclick="switchCaseTab('case3','role')">護理師角色</button>
+      </div>
+      <div id="case3-info" class="case-content active">
+        <table class="info-table">
+          <tr><td>病史</td><td>左側舌癌 T3N1M0，2 年前行半舌切除 + 頸部淋巴廓清 + 前臂皮瓣重建</td></tr>
+          <tr><td>放射治療</td><td>術後放射治療，總劑量 66 Gy，結束於 18 個月前</td></tr>
+          <tr><td>本次手術</td><td>皮瓣修整術（Flap revision），預計 3 小時</td></tr>
+          <tr><td>張口度</td><td>1.5 cm（放射治療後纖維化）</td></tr>
+          <tr><td>困難程度</td><td>氣道解剖嚴重變形，預期為最困難氣道等級</td></tr>
+        </table>
+        <div class="vitals-grid">
+          <div class="vital-item"><div class="vital-label">BP</div><div class="vital-value">132<span class="vital-unit">/78</span></div></div>
+          <div class="vital-item"><div class="vital-label">HR</div><div class="vital-value">74<span class="vital-unit">bpm</span></div></div>
+          <div class="vital-item"><div class="vital-label">SpO₂</div><div class="vital-value">98<span class="vital-unit">%</span></div></div>
+          <div class="vital-item"><div class="vital-label">張口度</div><div class="vital-value">1.5<span class="vital-unit">cm</span></div></div>
+        </div>
+      </div>
+      <div id="case3-assess" class="case-content">
+        <div class="alert red"><span class="alert-icon">!</span><div><strong>高度警示</strong>：放射治療後纖維化造成張口度嚴重受限（&lt;2cm）。喉鏡插管、面罩通氣、SAD 放置均可能失敗。此為<strong>最高等級困難氣道</strong>。</div></div>
+        <div class="alert red"><span class="alert-icon">!</span><div>皮瓣（flap）組織脆弱，操作時避免過度壓迫，以防影響血管吻合。</div></div>
+        <div class="risk-bar" style="margin-top:16px;">
+          <div class="risk-bar-label"><span>直接喉鏡可行性</span><span style="color:var(--red);">極低（張口 1.5cm）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:5%;background:var(--red);"></div></div>
+        </div>
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>面罩通氣</span><span style="color:var(--orange);">困難（解剖變形）</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:25%;background:var(--orange);"></div></div>
+        </div>
+        <div class="risk-bar">
+          <div class="risk-bar-label"><span>SAD 放置</span><span style="color:var(--orange);">困難</span></div>
+          <div class="risk-bar-track"><div class="risk-bar-fill" style="width:30%;background:var(--orange);"></div></div>
+        </div>
+      </div>
+      <div id="case3-flow" class="case-content">
+        <div class="alert blue"><span class="alert-icon">◎</span><div><strong>決策：清醒纖維支氣管鏡插管（Nasal approach 為優先）</strong></div></div>
+        <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2.2;margin-top:12px;">
+          <li>術前與病人充分溝通，解釋清醒插管的必要性</li>
+          <li>評估鼻腔通暢度（鼻插管優先：張口受限，口腔路徑困難）</li>
+          <li>Xylometazoline 噴鼻（收縮血管，減少出血）</li>
+          <li>Lidocaine 鼻腔噴霧 + 氣道霧化麻醉</li>
+          <li>FOB 從鼻腔引導，通過聲門後置入 ETT（鼻用 RAE tube / 加強管）</li>
+          <li>全程維持自主呼吸直到確認插管成功</li>
+        </ul>
+        <div class="alert red" style="margin-top:12px;"><span class="alert-icon">!</span><div><strong>備用計畫</strong>：若所有插管嘗試失敗，立即會同外科醫師執行<strong>清醒氣切（Awake tracheotomy）</strong>。此案例術前應已告知外科並確認其隨時可到場。</div></div>
+      </div>
+      <div id="case3-role" class="case-content">
+        <h3 style="margin-bottom:12px;">術前協調</h3>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認 FOB 功能正常，鏡頭清潔</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥鼻插管用 ETT（Nasal RAE tube 或加強管，尺寸 6.0-7.0）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>準備 Xylometazoline 噴鼻劑</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認外科醫師知情，並確認緊急氣切可行性</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥氣切包（置於明顯可及處）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認皮瓣評估記錄（顏色、溫度、多普勒）已完成</li>
+        </ul>
+        <div class="nursing-box" style="margin-top:16px;">
+          <div class="nursing-box-title">皮瓣照護注意</div>
+          <ul>
+            <li>固定 ETT 時避免膠布或固定器壓迫皮瓣</li>
+            <li>術後轉運時注意頭頸部位置，避免頸部過度旋轉影響皮瓣血流</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 4a: 空氣傳染 - COVID -->
+  <div class="case-card" id="case4a">
+    <div class="case-header" onclick="toggleCase('case4a')">
+      <div>
+        <span class="case-badge airborne">空氣傳染 · COVID-19</span>
+        <div class="case-title" style="margin-top:10px;">李先生，45 歲，COVID-19 確診，急性闌尾炎</div>
+        <div class="case-summary">確診 COVID-19 第 5 天，需緊急闌尾切除術。插管操作為高度飛沫暴露風險。</div>
+      </div>
+      <span class="case-toggle">+</span>
+    </div>
+    <div class="case-body">
+      <div class="case-tabs">
+        <button class="case-tab active" onclick="switchCaseTab('case4a','info')">病史摘要</button>
+        <button class="case-tab" onclick="switchCaseTab('case4a','assess')">防護準備</button>
+        <button class="case-tab" onclick="switchCaseTab('case4a','flow')">插管流程</button>
+        <button class="case-tab" onclick="switchCaseTab('case4a','role')">護理師角色</button>
+      </div>
+      <div id="case4a-info" class="case-content active">
+        <table class="info-table">
+          <tr><td>診斷</td><td>COVID-19 確診（Ct值 18，具傳染性）+ 急性闌尾炎</td></tr>
+          <tr><td>症狀</td><td>發燒 38.5°C、輕度呼吸困難、SpO₂ 94%（室內空氣）</td></tr>
+          <tr><td>胸部 X 光</td><td>雙側磨玻璃樣陰影（Ground-glass opacity）</td></tr>
+          <tr><td>插管考量</td><td>氣道評估尚可，主要挑戰為傳染控制與 PPE</td></tr>
+          <tr><td>手術室</td><td>應使用負壓手術室（若可用）或最大限度隔離</td></tr>
+        </table>
+        <div class="vitals-grid">
+          <div class="vital-item"><div class="vital-label">BP</div><div class="vital-value">122<span class="vital-unit">/76</span></div></div>
+          <div class="vital-item"><div class="vital-label">HR</div><div class="vital-value">98<span class="vital-unit">bpm</span></div></div>
+          <div class="vital-item"><div class="vital-label">SpO₂</div><div class="vital-value">94<span class="vital-unit">%</span></div></div>
+          <div class="vital-item"><div class="vital-label">Temp</div><div class="vital-value">38.5<span class="vital-unit">°C</span></div></div>
+        </div>
+      </div>
+      <div id="case4a-assess" class="case-content">
+        <h3 style="margin-bottom:12px;">PPE 穿著標準（插管人員）</h3>
+        <div class="alert red"><span class="alert-icon">!</span><div>插管為<strong>產生氣溶膠程序（AGP）</strong>，必須使用最高等級呼吸防護。</div></div>
+        <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2.2;margin-top:12px;">
+          <li><strong>N95 口罩</strong>（或同等 FFP2/FFP3）+ 外科口罩覆蓋</li>
+          <li>護目鏡 + 臉罩（Face shield）</li>
+          <li>防護衣（Gown）+ 手套 × 2 層</li>
+          <li>帽子 + 鞋套</li>
+        </ul>
+        <div class="alert orange" style="margin-top:8px;"><span class="alert-icon">▲</span><div>穿著 PPE 時手術靈活度下降，插管前應充分熟悉器械操作。建議指定<strong>最有經驗</strong>的麻醉醫師執行插管，減少嘗試次數。</div></div>
+        <h3 style="margin-top:20px;margin-bottom:10px;">人員最小化原則</h3>
+        <p style="font-size:14px;color:var(--text2);">插管時手術室內人員盡量減少，非必要人員在門外等待，插管完成並確認後再進入。</p>
+      </div>
+      <div id="case4a-flow" class="case-content">
+        <div class="alert blue"><span class="alert-icon">◎</span><div><strong>決策：快速序列插管（RSI）+ 視頻喉鏡優先</strong></div></div>
+        <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2.2;margin-top:12px;">
+          <li>視頻喉鏡（如 GlideScope）優先：操作者與氣道保持較大距離，降低暴露</li>
+          <li>避免 Bag-mask ventilation（BMV）：增加氣溶膠產生，使用 RSI 以避免</li>
+          <li>插管前在病人臉上蓋布單（某些建議），插管後立即移除</li>
+          <li>連接呼吸器前，先連接 HME filter（高效過濾器）</li>
+          <li>氣管內抽吸使用密閉式抽吸管（Closed-suction system）</li>
+          <li>手術期間維持 HEPA 過濾，手術室門保持關閉</li>
+        </ul>
+      </div>
+      <div id="case4a-role" class="case-content">
+        <h3 style="margin-bottom:12px;">插管前護理師任務</h3>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認負壓手術室已啟動（或最大通風設定）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>通知手術室門外等待人員，插管完成前不得入內</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥視頻喉鏡（GlideScope 已充電）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥 HME filter，連接於呼吸器迴路</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認自身 PPE 穿著正確（他人協助確認）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>密閉式抽吸管已連接</li>
+        </ul>
+        <div class="nursing-box" style="margin-top:16px;">
+          <div class="nursing-box-title">脫 PPE 注意（插管後）</div>
+          <ul>
+            <li>脫除順序：手套（外層）→ 護目鏡 → 防護衣 → 手套（內層）→ N95</li>
+            <li>每一步驟後進行手部衛生</li>
+            <li>脫除 N95 前確保已離開汙染區域</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CASE 4b: 空氣傳染 - TB -->
+  <div class="case-card" id="case4b">
+    <div class="case-header" onclick="toggleCase('case4b')">
+      <div>
+        <span class="case-badge airborne">空氣傳染 · 肺結核</span>
+        <div class="case-title" style="margin-top:10px;">張女士，38 歲，塗片陽性肺結核，氣胸</div>
+        <div class="case-summary">活動性肺結核（痰塗片 3+），張力性氣胸需緊急引流。MDR-TB 尚未確認。</div>
+      </div>
+      <span class="case-toggle">+</span>
+    </div>
+    <div class="case-body">
+      <div class="case-tabs">
+        <button class="case-tab active" onclick="switchCaseTab('case4b','info')">病史摘要</button>
+        <button class="case-tab" onclick="switchCaseTab('case4b','assess')">防護準備</button>
+        <button class="case-tab" onclick="switchCaseTab('case4b','flow')">插管流程</button>
+        <button class="case-tab" onclick="switchCaseTab('case4b','role')">護理師角色</button>
+      </div>
+      <div id="case4b-info" class="case-content active">
+        <table class="info-table">
+          <tr><td>診斷</td><td>活動性肺結核（痰塗片 3+）+ 右側張力性氣胸</td></tr>
+          <tr><td>治療狀況</td><td>抗結核治療第 14 天，MDR-TB 培養報告待回</td></tr>
+          <tr><td>緊急程度</td><td>張力性氣胸，血壓下降，SpO₂ 85%，需立即處置</td></tr>
+          <tr><td>特殊考量</td><td>活動性 TB，傳染性高；氣管可能偏移</td></tr>
+        </table>
+        <div class="vitals-grid">
+          <div class="vital-item"><div class="vital-label">BP</div><div class="vital-value">88<span class="vital-unit">/54</span></div></div>
+          <div class="vital-item"><div class="vital-label">HR</div><div class="vital-value">128<span class="vital-unit">bpm</span></div></div>
+          <div class="vital-item"><div class="vital-label">SpO₂</div><div class="vital-value">85<span class="vital-unit">%</span></div></div>
+          <div class="vital-item"><div class="vital-label">RR</div><div class="vital-value">32<span class="vital-unit">/min</span></div></div>
+        </div>
+      </div>
+      <div id="case4b-assess" class="case-content">
+        <div class="alert red"><span class="alert-icon">!</span><div><strong>塗片陽性 TB</strong>：傳染性極強，結核桿菌可在空氣中懸浮數小時。即便是短暫接觸也可能造成感染。</div></div>
+        <div class="alert orange"><span class="alert-icon">▲</span><div>此案例與 COVID-19 的差異：TB 主要為核滴核（Droplet nuclei），顆粒更小、更輕，空氣傳播時間更長。N95 為最低標準，若有 PAPR（動力型空氣淨化呼吸器）應優先使用。</div></div>
+        <h3 style="margin-top:16px;margin-bottom:10px;">TB vs COVID-19 防護比較</h3>
+        <table class="info-table">
+          <tr><td>傳播途徑</td><td>TB：Droplet nuclei（&lt;5 μm），COVID-19：Droplet + Aerosol</td></tr>
+          <tr><td>懸浮時間</td><td>TB 可達數小時；COVID-19 較短</td></tr>
+          <tr><td>呼吸防護</td><td>兩者均需 N95 以上；TB 若有 PAPR 更佳</td></tr>
+          <tr><td>手術室</td><td>兩者均建議負壓室；TB 結束後需更換空氣≥12 次</td></tr>
+        </table>
+      </div>
+      <div id="case4b-flow" class="case-content">
+        <div class="alert red"><span class="alert-icon">!</span><div><strong>張力性氣胸為立即威脅生命情況</strong>。傳染控制不能延誤治療，需同步進行。</div></div>
+        <div class="alert blue" style="margin-top:8px;"><span class="alert-icon">◎</span><div><strong>緊急胸腔引流（無需全麻）→ 若病情允許，再評估後續手術需求</strong></div></div>
+        <ul style="padding-left:20px;font-size:14px;color:var(--text2);line-height:2.2;margin-top:12px;">
+          <li>立即針刺減壓（第 2 肋間，鎖骨中線）→ 確認減壓有效</li>
+          <li>續行胸腔引流管（第 5 肋間，腋中線）</li>
+          <li>若需全麻插管：同 COVID-19 AGP 防護標準執行</li>
+          <li>氣管可能因氣胸而偏移，插管時確認深度與雙側呼吸音</li>
+          <li>避免使用 Nitrous oxide（加重氣胸）</li>
+          <li>手術結束後，手術室需負壓換氣 ≥ 1 小時（或 ACH≥12 次換氣後）才可使用</li>
+        </ul>
+      </div>
+      <div id="case4b-role" class="case-content">
+        <h3 style="margin-bottom:12px;">傳染控制協調</h3>
+        <ul class="checklist">
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>通知感染管制護理師（ICN）及感控小組</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認使用負壓手術室，並告知後勤關閉一般手術室通道</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>手術室外張貼隔離標示，限制非必要人員進入</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>確認所有進入人員均已穿 N95（最低標準）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>備妥胸腔引流包（緊急針刺減壓 + 引流管）</li>
+          <li onclick="toggleCheck(this)"><span class="check-box">✓</span>術後通知後勤：手術室換氣時間（≥60 分鐘，記錄時間）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     TAB 3: 測驗
+══════════════════════════════════════════════════ -->
+<section id="tab-quiz" class="section">
+  <div class="section-header">
+    <div class="section-label">Mixed Quiz</div>
+    <h1>測驗</h1>
+    <p>情境決策題與知識題交替，每題作答後提供詳細解析。</p>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div class="quiz-score">得分：<span class="score-val" id="score-display">0 / 0</span></div>
+    <button class="btn btn-outline btn-sm" onclick="resetQuiz()">重置測驗</button>
+  </div>
+  <div class="progress-track" id="quiz-progress-bar"></div>
+
+  <!-- Q1 -->
+  <div class="quiz-card" id="q1">
+    <span class="quiz-type-badge scenario">情境決策</span>
+    <div class="quiz-stem">58 歲男性，BMI 38，Mallampati IV，張口度 2.5cm，有插管困難病史。計畫行擇期全髖置換術。誘導前最適合的氣道管理策略為？</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answer(this,'q1','A')"><span class="option-key">A</span>標準快速序列插管（RSI），備妥視頻喉鏡</button>
+      <button class="quiz-option" onclick="answer(this,'q1','B')"><span class="option-key">B</span>清醒纖維支氣管鏡插管（Awake FOB intubation）</button>
+      <button class="quiz-option" onclick="answer(this,'q1','C')"><span class="option-key">C</span>先誘導，插管困難再換視頻喉鏡</button>
+      <button class="quiz-option" onclick="answer(this,'q1','D')"><span class="option-key">D</span>脊椎麻醉替代，避免插管</button>
+    </div>
+    <div class="quiz-explanation" id="q1-exp">
+      <strong>正確答案：B — 清醒纖維支氣管鏡插管</strong><br><br>
+      此病人具備多項困難氣道指標（Mallampati IV、BMI 38、張口受限、插管困難病史），符合「預期困難氣道」定義。ASA 2022 指引建議：當預期困難氣道且存在誤吸風險或其他危險因素時，應優先考慮清醒插管。<br><br>
+      選項 A 錯誤：先誘導後發現無法插管，將陷入非預期困難氣道困境。選項 D 雖可考慮，但全髖置換術之疼痛與手術時長，脊椎麻醉失敗風險不低，且無法應對術中意外。
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-card" id="q2">
+    <span class="quiz-type-badge knowledge">知識題</span>
+    <div class="quiz-stem">執行 Cricoid pressure（Sellick's maneuver）時，以下哪一點描述正確？</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answer(this,'q2','A')"><span class="option-key">A</span>應在病人意識喪失後才開始施壓</button>
+      <button class="quiz-option" onclick="answer(this,'q2','B')"><span class="option-key">B</span>施壓點為甲狀軟骨，向後壓迫食道</button>
+      <button class="quiz-option" onclick="answer(this,'q2','C')"><span class="option-key">C</span>從誘導藥注入開始，直到確認插管成功後解除</button>
+      <button class="quiz-option" onclick="answer(this,'q2','D')"><span class="option-key">D</span>插管視野良好時可持續維持施壓</button>
+    </div>
+    <div class="quiz-explanation" id="q2-exp">
+      <strong>正確答案：C</strong><br><br>
+      Cricoid pressure 的時機為：誘導藥注入開始施壓 → 確認 ETT 位置正確、氣囊充氣後解除。施壓點為<strong>環狀軟骨</strong>（不是甲狀軟骨），向後壓迫食道以減少胃內容物逆流。<br><br>
+      注意：若施壓影響插管視野，可依麻醉醫師指示適度減壓或調整角度。過強的 Cricoid pressure 反而可能使喉部偏移，增加插管困難。
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-card" id="q3">
+    <span class="quiz-type-badge scenario">情境決策</span>
+    <div class="quiz-stem">Plan A 插管失敗（已嘗試 3 次），面罩通氣 SpO₂ 維持 96%。您準備執行 Plan B 放置 LMA。此時護理師最應優先確認的是？</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answer(this,'q3','A')"><span class="option-key">A</span>立即呼叫外科醫師準備氣切</button>
+      <button class="quiz-option" onclick="answer(this,'q3','B')"><span class="option-key">B</span>確認適當型號的 second-generation LMA 備妥，並記錄已告知術者</button>
+      <button class="quiz-option" onclick="answer(this,'q3','C')"><span class="option-key">C</span>再嘗試一次插管，換用不同喉鏡</button>
+      <button class="quiz-option" onclick="answer(this,'q3','D')"><span class="option-key">D</span>給予 Sugammadex 逆轉肌鬆，準備喚醒病人</button>
+    </div>
+    <div class="quiz-explanation" id="q3-exp">
+      <strong>正確答案：B</strong><br><br>
+      目前 SpO₂ 96% 且面罩通氣有效，尚未進入 CICO。Plan B 的目標是放置 SAD 維持氧合，同時評估後續策略。護理師應立即確認 second-gen LMA（如 LMA Supreme 或 i-gel）備妥，並通知術者目前狀況，協調是否繼續手術。<br><br>
+      選項 A 過早（尚未至 CICO）。選項 C 已超過 3 次嘗試上限，不應繼續。選項 D 可以是 Plan B 或 C 後的考量，但當下首要任務是執行 Plan B。
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-card" id="q4">
+    <span class="quiz-type-badge knowledge">知識題</span>
+    <div class="quiz-stem">為 COVID-19 確診病人進行插管，以下哪一項措施有助於降低操作者的感染風險？</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answer(this,'q4','A')"><span class="option-key">A</span>使用直接喉鏡，縮短插管時間</button>
+      <button class="quiz-option" onclick="answer(this,'q4','B')"><span class="option-key">B</span>插管前進行充分的 Bag-mask ventilation</button>
+      <button class="quiz-option" onclick="answer(this,'q4','C')"><span class="option-key">C</span>使用視頻喉鏡，增加操作者與氣道的距離</button>
+      <button class="quiz-option" onclick="answer(this,'q4','D')"><span class="option-key">D</span>手術室維持正壓通氣以保護手術室環境</button>
+    </div>
+    <div class="quiz-explanation" id="q4-exp">
+      <strong>正確答案：C — 視頻喉鏡</strong><br><br>
+      視頻喉鏡（如 GlideScope）讓操作者可在較大距離外操作，同時螢幕顯示聲門視野，減少臉部靠近氣道的需要，顯著降低氣溶膠暴露風險。<br><br>
+      選項 A：直接喉鏡需操作者臉部靠近，增加暴露。選項 B：BMV 是高度產生氣溶膠的操作，在 AGP 情境下應盡量避免，採 RSI 以省略此步驟。選項 D：空氣傳染病人手術室應使用<strong>負壓</strong>（負壓室），防止污染空氣外溢，而非正壓。
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-card" id="q5">
+    <span class="quiz-type-badge scenario">情境決策</span>
+    <div class="quiz-stem">口腔癌術後病人（放射治療後，張口度 1.5cm），計畫清醒鼻插管。局部麻醉完成後，您發現病人突然焦慮、SpO₂ 下降至 90%。最可能的原因及下一步？</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answer(this,'q5','A')"><span class="option-key">A</span>Lidocaine 毒性反應，停止操作，給予 Lipid emulsion</button>
+      <button class="quiz-option" onclick="answer(this,'q5','B')"><span class="option-key">B</span>鎮靜過深造成呼吸抑制，給予 O₂ 支持，暫停鎮靜藥，喚醒病人</button>
+      <button class="quiz-option" onclick="answer(this,'q5','C')"><span class="option-key">C</span>立即執行緊急 RSI 插管</button>
+      <button class="quiz-option" onclick="answer(this,'q5','D')"><span class="option-key">D</span>加快插管速度，立即嘗試 FOB 插管</button>
+    </div>
+    <div class="quiz-explanation" id="q5-exp">
+      <strong>正確答案：B — 鎮靜過深，給予支持並喚醒</strong><br><br>
+      清醒插管的核心原則是「維持自主呼吸」。若鎮靜藥（如 Dexmedetomidine 或 Midazolam）劑量過大，造成呼吸抑制，最安全的處置是給予氧氣支持、暫停鎮靜藥、等待病人恢復自主呼吸後再繼續。<br><br>
+      此時<strong>不</strong>應立即 RSI（口腔癌張口 1.5cm，全麻後面罩通氣和 SAD 均困難，RSI 失敗風險極高）。選項 D 在 SpO₂ 下降時強行插管，可能因病人不合作而失敗。
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-card" id="q6">
+    <span class="quiz-type-badge knowledge">知識題</span>
+    <div class="quiz-stem">活動性肺結核（塗片陽性）手術結束後，手術室至少需要換氣多少次（Air changes per hour，ACH）且多長時間，才能讓下一台手術使用？</div>
+    <div class="quiz-options">
+      <button class="quiz-option" onclick="answer(this,'q6','A')"><span class="option-key">A</span>換氣 6 次，等待 30 分鐘即可</button>
+      <button class="quiz-option" onclick="answer(this,'q6','B')"><span class="option-key">B</span>換氣 12 次，等待至少 60 分鐘（具體視通風系統計算）</button>
+      <button class="quiz-option" onclick="answer(this,'q6','C')"><span class="option-key">C</span>噴灑消毒液後 15 分鐘即可</button>
+      <button class="quiz-option" onclick="answer(this,'q6','D')"><span class="option-key">D</span>紫外線照射 30 分鐘後可立即使用</button>
+    </div>
+    <div class="quiz-explanation" id="q6-exp">
+      <strong>正確答案：B — ACH ≥ 12，等待 ≥ 60 分鐘</strong><br><br>
+      WHO 與 CDC 建議，活動性 TB 病人離開後，空間需至少 12 次 ACH，且等待時間依通風量計算（一般標準建議 ≥60 分鐘）才能確保空氣中結核菌核滴核濃度降至安全水準。<br><br>
+      消毒噴霧和紫外線可作為輔助，但不能替代充分的換氣時間。紫外線對懸浮在空氣中的飛沫核效果有限，且需要足夠的照射時間與覆蓋範圍。
+    </div>
+  </div>
+
+</section>
+</main>
+
+<script>
+// ── TAB SWITCHING ──
+function switchTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── ALGO NODE EXPAND ──
+function toggleNode(node) {
+  const detail = node.nextElementSibling;
+  if (!detail || !detail.classList.contains('algo-detail')) return;
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open', !isOpen);
+  node.classList.toggle('expanded', !isOpen);
+}
+
+// ── PLAN TABS ──
+function switchPlan(plan, btn) {
+  document.querySelectorAll('.plan-content').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.plan-tab').forEach(t => t.classList.remove('active-plan'));
+  document.getElementById('plan-' + plan).classList.add('active');
+  btn.classList.add('active-plan');
+}
+
+// ── CASE ACCORDION ──
+function toggleCase(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ── CASE TABS ──
+function switchCaseTab(caseId, tab) {
+  const card = document.getElementById(caseId);
+  card.querySelectorAll('.case-tab').forEach(t => t.classList.remove('active'));
+  card.querySelectorAll('.case-content').forEach(c => c.classList.remove('active'));
+  card.querySelector(`[onclick*="${tab}"]`).classList.add('active');
+  document.getElementById(caseId + '-' + tab).classList.add('active');
+}
+
+// ── CHECKLIST ──
+function toggleCheck(li) {
+  li.classList.toggle('checked');
+}
+
+// ── QUIZ ──
+const answers = { q1:'B', q2:'C', q3:'B', q4:'C', q5:'B', q6:'B' };
+const total = Object.keys(answers).length;
+let scores = {};
+let attempts = {};
+
+function initQuizProgress() {
+  const bar = document.getElementById('quiz-progress-bar');
+  bar.innerHTML = '';
+  for (let i = 1; i <= total; i++) {
+    const step = document.createElement('div');
+    step.className = 'progress-step';
+    step.id = 'prog-q' + i;
+    bar.appendChild(step);
+  }
+}
+
+function updateScore() {
+  const correct = Object.values(scores).filter(Boolean).length;
+  const answered = Object.keys(scores).length;
+  document.getElementById('score-display').textContent = correct + ' / ' + answered;
+}
+
+function answer(btn, qId, choice) {
+  if (attempts[qId]) return;
+  attempts[qId] = true;
+  const correct = answers[qId];
+  const options = btn.parentElement.querySelectorAll('.quiz-option');
+  options.forEach(opt => opt.classList.add('disabled'));
+  const isCorrect = (choice === correct);
+  btn.classList.add(isCorrect ? 'selected-correct' : 'selected-wrong');
+  if (!isCorrect) {
+    options.forEach(opt => {
+      if (opt.textContent.trim()[0] === correct) opt.classList.add('revealed-correct');
+    });
+  }
+  const exp = document.getElementById(qId + '-exp');
+  exp.classList.add('open');
+  scores[qId] = isCorrect;
+  updateScore();
+  const progStep = document.getElementById('prog-' + qId);
+  if (progStep) {
+    progStep.style.background = isCorrect ? 'var(--teal)' : 'var(--red)';
+    progStep.classList.add('done');
+  }
+}
+
+function resetQuiz() {
+  scores = {}; attempts = {};
+  document.querySelectorAll('.quiz-option').forEach(opt => {
+    opt.classList.remove('selected-correct','selected-wrong','revealed-correct','disabled');
+  });
+  document.querySelectorAll('.quiz-explanation').forEach(e => e.classList.remove('open'));
+  updateScore();
+  initQuizProgress();
+}
+
+initQuizProgress();
+</script>
+
+<!-- ══════════════════════════════════════════════
+     PHASE 3 STYLES
+══════════════════════════════════════════════ -->
+<style>
+/* ── ANATOMY ── */
+.anatomy-layout { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media(max-width:780px){ .anatomy-layout { grid-template-columns:1fr; } }
+.anatomy-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; }
+.anatomy-panel-title { font-size:11px; font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--teal); margin-bottom:14px; }
+.anatomy-svg-wrap { position:relative; }
+.anatomy-svg-wrap svg { width:100%; height:auto; display:block; }
+.hotspot {
+  cursor:pointer; transition:opacity .2s;
+}
+.hotspot:hover .hs-ring { opacity:1; r:10; }
+.hs-ring { fill:none; stroke:var(--teal); stroke-width:1.5; opacity:0; transition:all .25s; }
+.hs-dot { fill:var(--teal); opacity:.85; }
+.hs-label {
+  font-size:10px; font-family:var(--mono); fill:var(--teal);
+  pointer-events:none;
+}
+.anatomy-info-box {
+  margin-top:14px; min-height:90px;
+  background:var(--surface2); border:1px solid var(--border2);
+  border-radius:var(--radius); padding:14px 16px;
+  font-size:13px; color:var(--text2); line-height:1.7;
+  transition:all .2s;
+}
+.anatomy-info-title { font-size:13px; font-weight:500; color:var(--text); margin-bottom:6px; }
+
+/* ── EQUIPMENT ── */
+.equip-filter-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.equip-filter {
+  font-size:12px; padding:6px 14px; border-radius:20px;
+  border:1px solid var(--border2); background:var(--surface2);
+  color:var(--text2); cursor:pointer; font-family:var(--font); transition:all .2s;
+}
+.equip-filter:hover { border-color:var(--border); color:var(--text); }
+.equip-filter.active { background:var(--teal-bg); border-color:var(--teal-border); color:var(--teal); }
+
+.equip-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:16px; }
+.equip-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); overflow:hidden;
+  transition:border-color .2s; cursor:pointer;
+}
+.equip-card:hover { border-color:var(--border2); }
+.equip-card.open { border-color:var(--teal-border); }
+.equip-card-head { padding:18px 20px 14px; }
+.equip-icon-wrap {
+  width:52px; height:52px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:12px; flex-shrink:0;
+}
+.equip-name { font-size:15px; font-weight:500; color:var(--text); margin-bottom:4px; }
+.equip-sub { font-size:12px; color:var(--text3); font-family:var(--mono); }
+.equip-tags { display:flex; gap:4px; flex-wrap:wrap; margin-top:10px; }
+.equip-body { display:none; border-top:1px solid var(--border); }
+.equip-card.open .equip-body { display:block; }
+.equip-tabs { display:flex; border-bottom:1px solid var(--border); padding:0 20px; }
+.equip-tab {
+  padding:10px 14px; font-size:12px; font-weight:500;
+  color:var(--text3); cursor:pointer; border-bottom:2px solid transparent;
+  background:none; border-left:none; border-right:none; border-top:none;
+  font-family:var(--font); transition:color .2s, border-color .2s;
+}
+.equip-tab:hover { color:var(--text2); }
+.equip-tab.active { color:var(--teal); border-bottom-color:var(--teal); }
+.equip-content { padding:16px 20px; display:none; font-size:13px; color:var(--text2); line-height:1.75; }
+.equip-content.active { display:block; }
+.equip-step-list { list-style:none; counter-reset:steps; }
+.equip-step-list li {
+  counter-increment:steps; display:flex; gap:12px;
+  padding:10px 0; border-bottom:1px solid var(--border); font-size:13px;
+}
+.equip-step-list li:last-child { border-bottom:none; }
+.equip-step-num {
+  font-family:var(--mono); font-size:11px; font-weight:500;
+  width:22px; height:22px; border-radius:50%;
+  background:var(--surface3); color:var(--teal);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.contra-list { list-style:none; }
+.contra-list li { padding:7px 0; border-bottom:1px solid var(--border); display:flex; gap:10px; font-size:13px; }
+.contra-list li:last-child { border-bottom:none; }
+.contra-dot { width:6px; height:6px; border-radius:50%; background:var(--red); flex-shrink:0; margin-top:5px; }
+
+/* ── EXTUBATION ── */
+.ext-section { margin-bottom:28px; }
+.ext-section-title {
+  font-size:12px; font-family:var(--mono); letter-spacing:.1em;
+  text-transform:uppercase; color:var(--teal); margin-bottom:14px;
+  padding-bottom:10px; border-bottom:1px solid var(--border);
+}
+.criteria-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin-bottom:16px; }
+.criteria-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius); padding:16px;
+}
+.criteria-card-title { font-size:13px; font-weight:500; color:var(--text); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+.criteria-check-list { list-style:none; }
+.criteria-check-list li {
+  display:flex; align-items:flex-start; gap:10px;
+  font-size:13px; color:var(--text2); padding:5px 0;
+  border-bottom:1px solid var(--border); cursor:pointer;
+}
+.criteria-check-list li:last-child { border-bottom:none; }
+.criteria-check-list li.checked { color:var(--text3); }
+.crit-box { width:16px; height:16px; border-radius:3px; border:1px solid var(--border2); flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:10px; color:transparent; margin-top:2px; }
+.criteria-check-list li.checked .crit-box { background:var(--teal-bg); border-color:var(--teal-border); color:var(--teal); }
+
+.ext-pathway {
+  display:flex; flex-direction:column; gap:0;
+  border:1px solid var(--border); border-radius:var(--radius-lg); overflow:hidden;
+}
+.ext-step {
+  padding:16px 20px; border-bottom:1px solid var(--border);
+  display:flex; gap:16px; align-items:flex-start;
+  cursor:pointer; transition:background .15s;
+}
+.ext-step:last-child { border-bottom:none; }
+.ext-step:hover { background:var(--surface2); }
+.ext-step.high-risk-step { border-left:3px solid var(--orange); }
+.ext-step-num {
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  width:28px; height:28px; border-radius:50%;
+  background:var(--surface2); color:var(--teal);
+  display:flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+.ext-step-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:4px; }
+.ext-step-desc { font-size:13px; color:var(--text2); }
+.ext-step-detail { display:none; padding:12px 20px 16px 64px; background:var(--surface2); border-bottom:1px solid var(--border); font-size:13px; color:var(--text2); }
+.ext-step-detail.open { display:block; }
+.ext-step-detail ul { padding-left:16px; line-height:2; }
+
+.complication-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+.complication-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); overflow:hidden;
+}
+.complication-head {
+  padding:14px 18px; display:flex; align-items:center;
+  gap:12px; cursor:pointer;
+}
+.complication-severity {
+  font-size:10px; font-family:var(--mono); padding:3px 8px;
+  border-radius:4px; flex-shrink:0;
+}
+.sev-high { background:var(--red-bg); color:var(--red); border:1px solid var(--red-border); }
+.sev-med { background:var(--orange-bg); color:var(--orange); border:1px solid var(--orange-border); }
+.complication-name { font-size:14px; font-weight:500; color:var(--text); flex:1; }
+.complication-toggle { color:var(--text3); font-size:16px; transition:transform .25s; }
+.complication-card.open .complication-toggle { transform:rotate(45deg); }
+.complication-body { display:none; border-top:1px solid var(--border); padding:14px 18px; font-size:13px; color:var(--text2); }
+.complication-card.open .complication-body { display:block; }
+.complication-body h4 { font-size:12px; font-family:var(--mono); color:var(--teal); letter-spacing:.08em; margin-bottom:6px; margin-top:10px; }
+.complication-body ul { padding-left:16px; line-height:2; }
+
+.handover-form {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:24px;
+}
+.handover-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:600px){ .handover-grid { grid-template-columns:1fr; } }
+.handover-field { margin-bottom:4px; }
+.handover-label { font-size:11px; font-family:var(--mono); color:var(--text3); margin-bottom:5px; display:block; text-transform:uppercase; letter-spacing:.06em; }
+.handover-input {
+  width:100%; padding:9px 12px; border-radius:var(--radius);
+  border:1px solid var(--border2); background:var(--surface2);
+  color:var(--text); font-size:14px; font-family:var(--font);
+  transition:border-color .2s;
+}
+.handover-input:focus { outline:none; border-color:var(--teal-border); }
+select.handover-input option { background:var(--surface2); }
+.handover-output {
+  margin-top:16px; padding:16px; background:var(--surface2);
+  border-radius:var(--radius); border:1px solid var(--border);
+  font-size:13px; color:var(--text2); font-family:var(--mono);
+  line-height:2; white-space:pre-wrap; min-height:80px;
+}
+</style>
+
+<!-- ══════════════════════════════════════════════
+     TAB 6: 氣道解剖
+══════════════════════════════════════════════ -->
+<section id="tab-anatomy" class="section">
+  <div class="section-header">
+    <div class="section-label">Interactive Anatomy</div>
+    <h1>氣道解剖</h1>
+    <p>點擊圖中標記點查看構造名稱、臨床意義與插管關聯。左側為矢狀切面，右側模擬喉鏡視野。</p>
+  </div>
+
+  <div class="anatomy-layout">
+    <!-- LEFT: Sagittal view -->
+    <div class="anatomy-panel">
+      <div class="anatomy-panel-title">矢狀切面 — 上呼吸道</div>
+      <div class="anatomy-svg-wrap">
+        <svg viewBox="0 0 320 420" xmlns="http://www.w3.org/2000/svg" style="background:var(--surface2);border-radius:10px;">
+          <!-- Head outline -->
+          <ellipse cx="160" cy="80" rx="72" ry="75" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Brain area -->
+          <ellipse cx="160" cy="55" rx="55" ry="42" fill="var(--surface3)" stroke="var(--border)" stroke-width="1"/>
+          <!-- Face profile -->
+          <path d="M88 105 Q80 130 84 155 Q88 175 100 185" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Nasal cavity -->
+          <path d="M100 90 Q105 80 115 78 Q130 76 140 85 Q145 90 142 100 Q138 112 125 115 Q110 118 102 108 Z" fill="var(--surface3)" stroke="var(--border2)" stroke-width="1.2"/>
+          <text x="108" y="100" font-size="9" fill="var(--text3)" font-family="monospace">鼻腔</text>
+          <!-- Oral cavity -->
+          <path d="M100 118 Q105 112 125 115 Q145 118 155 125 Q160 132 158 145 Q155 155 140 158 Q120 162 105 155 Q95 148 95 138 Z" fill="var(--surface3)" stroke="var(--border2)" stroke-width="1.2"/>
+          <!-- Tongue -->
+          <path d="M100 135 Q110 128 130 130 Q148 132 155 140 Q158 148 150 155 Q135 162 115 158 Q100 154 97 145 Z" fill="var(--surface)" stroke="var(--border2)" stroke-width="1" opacity=".9"/>
+          <text x="118" y="147" font-size="9" fill="var(--text3)" font-family="monospace">舌</text>
+          <!-- Hard palate -->
+          <line x1="100" y1="118" x2="155" y2="120" stroke="var(--border2)" stroke-width="2"/>
+          <!-- Soft palate -->
+          <path d="M155 120 Q165 122 168 130 Q170 138 162 142" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Uvula -->
+          <ellipse cx="163" cy="146" rx="4" ry="6" fill="var(--surface)" stroke="var(--border2)" stroke-width="1"/>
+          <!-- Pharynx -->
+          <path d="M162 142 Q172 155 170 175 Q168 195 165 215" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <path d="M188 140 Q200 155 198 180 Q196 205 193 225" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Epiglottis -->
+          <path d="M165 215 Q168 225 172 228 Q180 232 186 226 Q190 220 193 225" fill="var(--surface)" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Vocal cords area -->
+          <ellipse cx="179" cy="248" rx="18" ry="8" fill="var(--surface3)" stroke="var(--border2)" stroke-width="1.2"/>
+          <line x1="166" y1="248" x2="192" y2="248" stroke="var(--text3)" stroke-width="1" stroke-dasharray="3,2"/>
+          <!-- Trachea -->
+          <rect x="166" y="256" width="26" height="120" rx="4" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Tracheal rings -->
+          <line x1="166" y1="272" x2="192" y2="272" stroke="var(--border)" stroke-width="1"/>
+          <line x1="166" y1="288" x2="192" y2="288" stroke="var(--border)" stroke-width="1"/>
+          <line x1="166" y1="304" x2="192" y2="304" stroke="var(--border)" stroke-width="1"/>
+          <line x1="166" y1="320" x2="192" y2="320" stroke="var(--border)" stroke-width="1"/>
+          <line x1="166" y1="336" x2="192" y2="336" stroke="var(--border)" stroke-width="1"/>
+          <!-- Carina -->
+          <path d="M166 376 Q179 385 192 376" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+          <!-- Esophagus behind trachea -->
+          <rect x="194" y="240" width="18" height="136" rx="3" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="4,3"/>
+          <text x="196" y="310" font-size="8" fill="var(--text3)" font-family="monospace" transform="rotate(90,196,310)">食道</text>
+          <!-- Thyroid cartilage label area -->
+          <path d="M160 238 Q162 245 166 248" fill="none" stroke="var(--border)" stroke-width="1" stroke-dasharray="2,2"/>
+          <!-- Cricoid -->
+          <rect x="163" y="258" width="32" height="12" rx="3" fill="none" stroke="var(--border2)" stroke-width="1.5"/>
+
+          <!-- ── HOTSPOTS ── -->
+          <!-- 1: Nasal cavity -->
+          <g class="hotspot" onclick="showAnatomyInfo('nasal')">
+            <circle class="hs-ring" cx="60" cy="95" r="8"/>
+            <circle class="hs-dot" cx="60" cy="95" r="5"/>
+            <line x1="65" y1="95" x2="100" y2="97" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 2: Tongue -->
+          <g class="hotspot" onclick="showAnatomyInfo('tongue')">
+            <circle class="hs-ring" cx="50" cy="148" r="8"/>
+            <circle class="hs-dot" cx="50" cy="148" r="5"/>
+            <line x1="55" y1="148" x2="97" y2="145" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 3: Soft palate / Uvula -->
+          <g class="hotspot" onclick="showAnatomyInfo('soft_palate')">
+            <circle class="hs-ring" cx="240" cy="132" r="8"/>
+            <circle class="hs-dot" cx="240" cy="132" r="5"/>
+            <line x1="235" y1="132" x2="168" y2="136" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 4: Epiglottis -->
+          <g class="hotspot" onclick="showAnatomyInfo('epiglottis')">
+            <circle class="hs-ring" cx="248" cy="226" r="8"/>
+            <circle class="hs-dot" cx="248" cy="226" r="5"/>
+            <line x1="243" y1="226" x2="190" y2="226" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 5: Vocal cords -->
+          <g class="hotspot" onclick="showAnatomyInfo('vocal_cords')">
+            <circle class="hs-ring" cx="248" cy="248" r="8"/>
+            <circle class="hs-dot" cx="248" cy="248" r="5"/>
+            <line x1="243" y1="248" x2="192" y2="248" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 6: Thyroid cartilage -->
+          <g class="hotspot" onclick="showAnatomyInfo('thyroid_cart')">
+            <circle class="hs-ring" cx="50" cy="235" r="8"/>
+            <circle class="hs-dot" cx="50" cy="235" r="5"/>
+            <line x1="55" y1="235" x2="160" y2="237" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 7: Cricoid -->
+          <g class="hotspot" onclick="showAnatomyInfo('cricoid')">
+            <circle class="hs-ring" cx="50" cy="264" r="8"/>
+            <circle class="hs-dot" cx="50" cy="264" r="5"/>
+            <line x1="55" y1="264" x2="163" y2="264" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 8: Trachea -->
+          <g class="hotspot" onclick="showAnatomyInfo('trachea')">
+            <circle class="hs-ring" cx="248" cy="305" r="8"/>
+            <circle class="hs-dot" cx="248" cy="305" r="5"/>
+            <line x1="243" y1="305" x2="192" y2="305" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- 9: Carina -->
+          <g class="hotspot" onclick="showAnatomyInfo('carina')">
+            <circle class="hs-ring" cx="248" cy="378" r="8"/>
+            <circle class="hs-dot" cx="248" cy="378" r="5"/>
+            <line x1="243" y1="378" x2="192" y2="378" stroke="var(--teal)" stroke-width="1" opacity=".5"/>
+          </g>
+          <!-- Labels for hotspots -->
+          <text x="28" y="93" font-size="9" fill="var(--text3)" font-family="monospace">鼻腔</text>
+          <text x="28" y="150" font-size="9" fill="var(--text3)" font-family="monospace">舌根</text>
+          <text x="244" y="129" font-size="9" fill="var(--text3)" font-family="monospace">軟顎</text>
+          <text x="238" y="224" font-size="9" fill="var(--text3)" font-family="monospace">會厭</text>
+          <text x="234" y="246" font-size="9" fill="var(--text3)" font-family="monospace">聲帶</text>
+          <text x="22" y="233" font-size="9" fill="var(--text3)" font-family="monospace">甲狀軟骨</text>
+          <text x="22" y="262" font-size="9" fill="var(--text3)" font-family="monospace">環狀軟骨</text>
+          <text x="240" y="303" font-size="9" fill="var(--text3)" font-family="monospace">氣管</text>
+          <text x="238" y="376" font-size="9" fill="var(--text3)" font-family="monospace">隆突</text>
+        </svg>
+      </div>
+      <div class="anatomy-info-box" id="sagittal-info">
+        <div style="color:var(--text3);font-size:13px;">點擊圖中任一標記點查看詳細說明</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Laryngoscopy view -->
+    <div class="anatomy-panel">
+      <div class="anatomy-panel-title">喉鏡視野 — Cormack-Lehane 分級</div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+        <button class="equip-filter active" onclick="setCL(1,this)">Grade I</button>
+        <button class="equip-filter" onclick="setCL(2,this)">Grade II</button>
+        <button class="equip-filter" onclick="setCL(3,this)">Grade III</button>
+        <button class="equip-filter" onclick="setCL(4,this)">Grade IV</button>
+      </div>
+      <div class="anatomy-svg-wrap">
+        <svg id="cl-svg" viewBox="0 0 280 260" xmlns="http://www.w3.org/2000/svg" style="background:var(--surface2);border-radius:10px;">
+          <!-- Outer oral ring -->
+          <ellipse cx="140" cy="130" rx="110" ry="100" fill="#0a0c10" stroke="var(--border)" stroke-width="1.5"/>
+          <!-- Tongue base / pharynx walls -->
+          <ellipse cx="140" cy="130" rx="88" ry="80" fill="#111420" stroke="var(--border)" stroke-width="1"/>
+
+          <!-- Grade I: full glottis visible -->
+          <g id="cl-grade-1">
+            <!-- Epiglottis -->
+            <path d="M95 148 Q140 128 185 148 Q188 160 182 168 Q160 178 140 180 Q120 178 98 168 Q92 160 95 148Z" fill="#1a1e2e" stroke="var(--border2)" stroke-width="1.5"/>
+            <!-- Arytenoids -->
+            <ellipse cx="118" cy="172" rx="10" ry="7" fill="#1e2235" stroke="var(--border2)" stroke-width="1"/>
+            <ellipse cx="162" cy="172" rx="10" ry="7" fill="#1e2235" stroke="var(--border2)" stroke-width="1"/>
+            <!-- Vocal cords - fully visible -->
+            <path d="M108 165 Q140 155 172 165 Q170 178 140 182 Q110 178 108 165Z" fill="#232840" stroke="var(--teal)" stroke-width="1.5"/>
+            <!-- Glottic opening -->
+            <ellipse cx="140" cy="170" rx="18" ry="8" fill="#0a0c14" stroke="var(--teal)" stroke-width="1.5"/>
+            <text x="140" y="173" text-anchor="middle" font-size="8" fill="var(--teal)" font-family="monospace">聲門</text>
+            <!-- True cords lines -->
+            <line x1="122" y1="168" x2="140" y2="162" stroke="#8dd" stroke-width="1" opacity=".6"/>
+            <line x1="158" y1="168" x2="140" y2="162" stroke="#8dd" stroke-width="1" opacity=".6"/>
+            <!-- Label -->
+            <text x="140" y="218" text-anchor="middle" font-size="10" fill="var(--teal)" font-family="monospace">聲帶完整可見</text>
+            <text x="140" y="230" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="monospace">插管難度：低</text>
+          </g>
+
+          <!-- Grade II -->
+          <g id="cl-grade-2" style="display:none">
+            <path d="M92 145 Q140 125 188 145 Q190 158 184 166 Q162 178 140 180 Q118 178 96 166 Q90 158 92 145Z" fill="#1a1e2e" stroke="var(--border2)" stroke-width="1.5"/>
+            <ellipse cx="116" cy="170" rx="10" ry="7" fill="#1e2235" stroke="var(--border2)" stroke-width="1"/>
+            <ellipse cx="164" cy="170" rx="10" ry="7" fill="#1e2235" stroke="var(--border2)" stroke-width="1"/>
+            <!-- Partial cords - posterior only -->
+            <path d="M116 166 Q140 158 164 166 Q165 174 140 177 Q115 174 116 166Z" fill="#232840" stroke="var(--orange)" stroke-width="1.5"/>
+            <ellipse cx="140" cy="170" rx="10" ry="5" fill="#0a0c14" stroke="var(--orange)" stroke-width="1.5"/>
+            <!-- Epiglottis obscuring anterior -->
+            <path d="M100 148 Q140 135 180 148 Q175 160 140 162 Q105 160 100 148Z" fill="#1a1e2e" stroke="var(--border)" stroke-width="1.5" opacity=".9"/>
+            <text x="140" y="218" text-anchor="middle" font-size="10" fill="var(--orange)" font-family="monospace">後聲帶可見</text>
+            <text x="140" y="230" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="monospace">插管難度：中</text>
+          </g>
+
+          <!-- Grade III -->
+          <g id="cl-grade-3" style="display:none">
+            <path d="M90 140 Q140 118 190 140 Q192 155 185 165 Q165 178 140 180 Q115 178 95 165 Q88 155 90 140Z" fill="#1a1e2e" stroke="var(--border2)" stroke-width="1.5"/>
+            <!-- Only epiglottis visible, no cords -->
+            <path d="M96 143 Q140 130 184 143 Q180 158 140 162 Q100 158 96 143Z" fill="#1c2030" stroke="var(--red)" stroke-width="1.5"/>
+            <text x="140" y="155" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="monospace">僅見會厭</text>
+            <text x="140" y="218" text-anchor="middle" font-size="10" fill="var(--red)" font-family="monospace">僅會厭可見</text>
+            <text x="140" y="230" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="monospace">插管困難，需 BURP/Bougie</text>
+          </g>
+
+          <!-- Grade IV -->
+          <g id="cl-grade-4" style="display:none">
+            <!-- Soft palate only, no epiglottis -->
+            <ellipse cx="140" cy="148" rx="70" ry="40" fill="#1a1e2e" stroke="var(--border)" stroke-width="1.5"/>
+            <path d="M105 148 Q140 138 175 148" fill="none" stroke="var(--border2)" stroke-width="1" stroke-dasharray="4,3"/>
+            <text x="140" y="152" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="monospace">軟顎</text>
+            <text x="140" y="218" text-anchor="middle" font-size="10" fill="var(--red)" font-family="monospace">無聲門結構可見</text>
+            <text x="140" y="230" text-anchor="middle" font-size="9" fill="var(--text3)" font-family="monospace">預期極度困難插管</text>
+          </g>
+
+          <!-- Grade badge -->
+          <rect x="10" y="10" width="68" height="22" rx="5" fill="var(--surface2)" stroke="var(--border2)" stroke-width="1"/>
+          <text id="cl-grade-text" x="44" y="24" text-anchor="middle" font-size="11" fill="var(--teal)" font-family="monospace" font-weight="500">Grade I</text>
+        </svg>
+      </div>
+      <div class="anatomy-info-box" id="cl-info-box">
+        <div class="anatomy-info-title">Cormack-Lehane Grade I</div>
+        <div>聲帶完整暴露，插管難度低。約 85–90% 的插管屬此類。標準喉鏡即可，無需特殊輔助工具。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     TAB 7: 器械圖鑑
+══════════════════════════════════════════════ -->
+<section id="tab-equipment" class="section">
+  <div class="section-header">
+    <div class="section-label">Equipment Guide</div>
+    <h1>器械圖鑑</h1>
+    <p>點擊器械卡片展開完整說明。使用類別篩選器快速定位。</p>
+  </div>
+
+  <div class="equip-filter-row">
+    <button class="equip-filter active" onclick="filterEquip('all',this)">全部</button>
+    <button class="equip-filter" onclick="filterEquip('laryngoscope',this)">喉鏡類</button>
+    <button class="equip-filter" onclick="filterEquip('ett',this)">ETT</button>
+    <button class="equip-filter" onclick="filterEquip('sad',this)">聲門上裝置</button>
+    <button class="equip-filter" onclick="filterEquip('adjunct',this)">輔助工具</button>
+    <button class="equip-filter" onclick="filterEquip('surgical',this)">外科氣道</button>
+  </div>
+
+  <div class="equip-grid" id="equip-grid">
+
+    <!-- 1: Direct Laryngoscope -->
+    <div class="equip-card" data-cat="laryngoscope" onclick="toggleEquip(this)">
+      <div class="equip-card-head">
+        <div class="equip-icon-wrap" style="background:var(--blue-bg);">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--blue)" stroke-width="1.5"><path d="M8 22 L8 10 Q8 6 12 5 L22 5"/><path d="M8 10 L20 10"/><circle cx="22" cy="5" r="2"/></svg>
+        </div>
+        <div class="equip-name">直接喉鏡</div>
+        <div class="equip-sub">Direct Laryngoscope</div>
+        <div class="equip-tags">
+          <span class="tag tag-blue">Macintosh</span>
+          <span class="tag tag-blue">Miller</span>
+          <span class="tag tag-teal">標準首選</span>
+        </div>
+      </div>
+      <div class="equip-body">
+        <div class="equip-tabs">
+          <button class="equip-tab active" onclick="eqTab(event,'dl','use')">使用步驟</button>
+          <button class="equip-tab" onclick="eqTab(event,'dl','ind')">適用時機</button>
+          <button class="equip-tab" onclick="eqTab(event,'dl','err')">常見錯誤</button>
+        </div>
+        <div id="dl-use" class="equip-content active">
+          <ol class="equip-step-list">
+            <li><span class="equip-step-num">1</span><div>確認喉鏡片卡扣固定，燈光功能正常（亮度足夠）</div></li>
+            <li><span class="equip-step-num">2</span><div>病人頭部擺位：「嗅花位」— 屈曲頸部、伸展寰枕關節</div></li>
+            <li><span class="equip-step-num">3</span><div>Macintosh：喉鏡置入右側口角，舌頭撥向左，鏡片尖端置於會厭谷（vallecula）</div></li>
+            <li><span class="equip-step-num">4</span><div>向前上方施力（45° 角），切勿以上排牙齒為支點撬動</div></li>
+            <li><span class="equip-step-num">5</span><div>暴露聲帶後置入 ETT，通過聲帶後 2–3 cm 停止</div></li>
+            <li><span class="equip-step-num">6</span><div>充氣囊（5–8 mL），確認 EtCO₂ 波形及雙側呼吸音</div></li>
+          </ol>
+        </div>
+        <div id="dl-ind" class="equip-content">
+          <div class="alert teal" style="margin-bottom:12px;font-size:13px;"><span class="alert-icon">✓</span><div>預期無困難氣道（Mallampati I/II，LEMON 低風險）的標準插管</div></div>
+          <ul class="contra-list">
+            <li><span class="contra-dot" style="background:var(--red)"></span>頸椎不穩定（慎用，需維持中立位）</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>張口度 &lt; 2.5 cm（操作空間不足）</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>Mallampati III/IV（考慮視頻喉鏡）</li>
+          </ul>
+        </div>
+        <div id="dl-err" class="equip-content">
+          <ul class="contra-list">
+            <li><span class="contra-dot" style="background:var(--orange)"></span>以牙齒為支點撬動 → 斷牙風險</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>鏡片插入過深，超過會厭谷 → 聲帶反而被遮蔽</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>嗅花位不足 → 視野差，先調整體位再繼續</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>燈光不足未發現 → 備用手電筒確認</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Video Laryngoscope -->
+    <div class="equip-card" data-cat="laryngoscope" onclick="toggleEquip(this)">
+      <div class="equip-card-head">
+        <div class="equip-icon-wrap" style="background:var(--teal-bg);">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--teal)" stroke-width="1.5"><path d="M6 22 L6 10 Q6 5 11 4 L22 4"/><rect x="14" y="7" width="8" height="6" rx="1.5"/><circle cx="22" cy="4" r="2"/><path d="M6 10 L14 10"/></svg>
+        </div>
+        <div class="equip-name">視頻喉鏡</div>
+        <div class="equip-sub">Video Laryngoscope (GlideScope / C-MAC)</div>
+        <div class="equip-tags">
+          <span class="tag tag-teal">困難氣道首選</span>
+          <span class="tag tag-orange">AGP 防護</span>
+        </div>
+      </div>
+      <div class="equip-body">
+        <div class="equip-tabs">
+          <button class="equip-tab active" onclick="eqTab(event,'vl','use')">使用步驟</button>
+          <button class="equip-tab" onclick="eqTab(event,'vl','ind')">適用時機</button>
+          <button class="equip-tab" onclick="eqTab(event,'vl','err')">常見錯誤</button>
+        </div>
+        <div id="vl-use" class="equip-content active">
+          <ol class="equip-step-list">
+            <li><span class="equip-step-num">1</span><div>開機確認螢幕畫面清晰，鏡頭防霧處理（Antifog solution）</div></li>
+            <li><span class="equip-step-num">2</span><div>ETT 內預裝配合視頻喉鏡角度的 Stylet（預塑彎曲 90°）</div></li>
+            <li><span class="equip-step-num">3</span><div>沿正中線置入，觀看螢幕（不直視喉部）</div></li>
+            <li><span class="equip-step-num">4</span><div>將聲門置於螢幕中央後，旋轉 ETT 送入聲門</div></li>
+            <li><span class="equip-step-num">5</span><div>ETT 通過聲帶後，退出 Stylet 再繼續推進至適當深度</div></li>
+            <li><span class="equip-step-num">6</span><div>充氣囊，確認 EtCO₂，固定管路</div></li>
+          </ol>
+        </div>
+        <div id="vl-ind" class="equip-content">
+          <div class="alert teal" style="margin-bottom:10px;font-size:13px;"><span class="alert-icon">✓</span><div>Mallampati III/IV、LEMON 中高風險、肥胖病人、頸部活動受限、空氣傳染防護</div></div>
+          <div class="alert blue" style="font-size:13px;"><span class="alert-icon">◎</span><div>操作者距離氣道較遠，AGP 情境（COVID-19）優先選擇</div></div>
+        </div>
+        <div id="vl-err" class="equip-content">
+          <ul class="contra-list">
+            <li><span class="contra-dot" style="background:var(--orange)"></span>視野好但 ETT 無法送入 → 常見！螢幕上看到聲門不代表 ETT 方向對準；需旋轉技巧</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>Stylet 角度不足 → 預先塑形至 90° 彎度</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>鏡頭被分泌物遮蓋 → 備用 Suction 隨時清除</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3: ETT -->
+    <div class="equip-card" data-cat="ett" onclick="toggleEquip(this)">
+      <div class="equip-card-head">
+        <div class="equip-icon-wrap" style="background:var(--orange-bg);">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--orange)" stroke-width="1.5"><path d="M4 14 Q4 10 8 9 L22 9 Q26 9 26 14 L26 16 Q26 19 22 19 L8 19 Q4 19 4 16Z"/><path d="M4 14 L2 14"/><path d="M8 14 L8 22"/><ellipse cx="8" cy="23" rx="4" ry="1.5"/></svg>
+        </div>
+        <div class="equip-name">氣管內管（ETT）</div>
+        <div class="equip-sub">Endotracheal Tube — 類型與尺寸</div>
+        <div class="equip-tags">
+          <span class="tag tag-orange">標準管</span>
+          <span class="tag tag-orange">加強管</span>
+          <span class="tag tag-orange">RAE 管</span>
+        </div>
+      </div>
+      <div class="equip-body">
+        <div class="equip-tabs">
+          <button class="equip-tab active" onclick="eqTab(event,'ett','size')">尺寸選擇</button>
+          <button class="equip-tab" onclick="eqTab(event,'ett','types')">管路類型</button>
+          <button class="equip-tab" onclick="eqTab(event,'ett','tips')">注意事項</button>
+        </div>
+        <div id="ett-size" class="equip-content active">
+          <table class="info-table" style="font-size:13px;">
+            <tr><td>成人男性</td><td>7.5–8.0 mm ID（首選 8.0）</td></tr>
+            <tr><td>成人女性</td><td>7.0–7.5 mm ID（首選 7.0）</td></tr>
+            <tr><td>孕婦</td><td>7.0 mm（水腫，備 6.5）</td></tr>
+            <tr><td>小兒（有氣囊）</td><td>（年齡÷4）+ 3.5</td></tr>
+            <tr><td>小兒（無氣囊）</td><td>（年齡÷4）+ 4</td></tr>
+            <tr><td>固定深度（成人）</td><td>男性 22–23 cm，女性 20–21 cm（門齒）</td></tr>
+          </table>
+          <div class="alert orange" style="margin-top:10px;font-size:13px;"><span class="alert-icon">▲</span><div>氣囊壓力：維持在 20–30 cmH₂O（成人）；&lt;20 cmH₂O 漏氣，&gt;30 cmH₂O 氣管黏膜壓迫缺血。</div></div>
+        </div>
+        <div id="ett-types" class="equip-content">
+          <ul style="list-style:none;padding:0;">
+            <li style="padding:10px 0;border-bottom:1px solid var(--border);"><strong style="color:var(--text);">標準 PVC 管</strong> — 一般手術首選，透明可見分泌物</li>
+            <li style="padding:10px 0;border-bottom:1px solid var(--border);"><strong style="color:var(--text);">加強管（Reinforced / Armored）</strong> — 螺旋金屬強化，防折管，適用俯臥位、頭頸手術</li>
+            <li style="padding:10px 0;border-bottom:1px solid var(--border);"><strong style="color:var(--text);">Oral RAE 管</strong> — 預塑彎向下顎，適用唇顎裂、口腔手術（避開術野）</li>
+            <li style="padding:10px 0;border-bottom:1px solid var(--border);"><strong style="color:var(--text);">Nasal RAE 管</strong> — 預塑彎向鼻背，適用口腔癌、口腔手術需鼻插管者</li>
+            <li style="padding:10px 0;"><strong style="color:var(--text);">雷射管（Laser tube）</strong> — 金屬外覆，耳鼻喉雷射手術使用，防燃燒</li>
+          </ul>
+        </div>
+        <div id="ett-tips" class="equip-content">
+          <ul class="contra-list">
+            <li><span class="contra-dot" style="background:var(--orange)"></span>插管前測試氣囊完整性（充氣後看是否漏氣）</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>單側呼吸音 → 先排除右主支氣管插管（管路太深）</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>加強管固定膠布不能覆蓋鋼絲末端，避免管路移位時整段脫出</li>
+            <li><span class="contra-dot" style="background:var(--orange)"></span>俯臥位手術前確認固定穩固；俯臥後重新聽診確認位置</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4: LMA / SAD -->
+    <div class="equip-card" data-cat="sad" onclick="toggleEquip(this)">
+      <div class="equip-card-head">
+        <div class="equip-icon-wrap" style="background:var(--purple-bg);">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--purple)" stroke-width="1.5"><ellipse cx="14" cy="16" rx="9" ry="6"/><path d="M14 10 L14 4"/><path d="M10 4 L18 4"/><path d="M8 16 Q5 16 5 20 Q5 24 14 24 Q23 24 23 20 Q23 16 20 16"/></svg>
+        </div>
+        <div class="equip-name">聲門上氣道裝置（SAD）</div>
+        <div class="equip-sub">Supraglottic Airway Device — LMA 系列</div>
+        <div class="equip-tags">
+          <span class="tag" style="background:var(--purple-bg);color:var(--purple);">LMA Classic</span>
+          <span class="tag" style="background:var(--purple-bg);color:var(--purple);">LMA Supreme</span>
+          <span class="tag" style="background:var(--purple-bg);color:var(--purple);">i-gel</span>
+        </div>
+      </div>
+      <div class="equip-body">
+        <div class="equip-tabs">
+          <button class="equip-tab active" onclick="eqTab(event,'sad','use')">放置步驟</button>
+          <button class="equip-tab" onclick="eqTab(event,'sad','size')">尺寸選擇</button>
+          <button class="equip-tab" onclick="eqTab(event,'sad','contra')">禁忌症</button>
+        </div>
+        <div id="sad-use" class="equip-content active">
+          <ol class="equip-step-list">
+            <li><span class="equip-step-num">1</span><div>選擇適當尺寸（依體重），氣囊完全抽扁，塗少量潤滑劑於背面</div></li>
+            <li><span class="equip-step-num">2</span><div>頭部後仰，張口，以「點頭」姿勢引導 LMA 沿硬顎置入</div></li>
+            <li><span class="equip-step-num">3</span><div>持續向下置入直到感覺阻力（LMA 到達下咽）</div></li>
+            <li><span class="equip-step-num">4</span><div>充氣囊（依尺寸建議量），不要過充（氣囊壓力 &lt;60 cmH₂O）</div></li>
+            <li><span class="equip-step-num">5</span><div>連接呼吸器，確認 EtCO₂ 波形、胸部起伏，確認無大量漏氣</div></li>
+            <li><span class="equip-step-num">6</span><div>固定 LMA，記錄置入深度</div></li>
+          </ol>
+          <div class="alert blue" style="margin-top:8px;font-size:13px;"><span class="alert-icon">◎</span><div>Second-gen SAD（LMA Supreme、i-gel）具胃管通道，可放置胃管減少誤吸風險，是 Plan B 首選。</div></div>
+        </div>
+        <div id="sad-size" class="equip-content">
+          <table class="info-table" style="font-size:13px;">
+            <tr><td>Size 1</td><td>新生兒（&lt;5 kg），氣囊 4 mL</td></tr>
+            <tr><td>Size 1.5</td><td>嬰兒（5–10 kg），氣囊 7 mL</td></tr>
+            <tr><td>Size 2</td><td>10–20 kg，氣囊 10 mL</td></tr>
+            <tr><td>Size 2.5</td><td>20–30 kg，氣囊 14 mL</td></tr>
+            <tr><td>Size 3</td><td>30–50 kg（小成人），氣囊 20 mL</td></tr>
+            <tr><td>Size 4</td><td>50–70 kg，氣囊 30 mL</td></tr>
+            <tr><td>Size 5</td><td>&gt;70 kg，氣囊 40 mL</td></tr>
+          </table>
+        </div>
+        <div id="sad-contra" class="equip-content">
+          <ul class="contra-list">
+            <li><span class="contra-dot"></span>飽胃（相對禁忌，除非 second-gen SAD 緊急維生）</li>
+            <li><span class="contra-dot"></span>氣道阻力高（需高通氣壓力 &gt;20 cmH₂O）</li>
+            <li><span class="contra-dot"></span>長時間手術（&gt;4 小時）仍以插管為宜</li>
+            <li><span class="contra-dot"></span>俯臥位（風險較高，需特別評估）</li>
+            <li><span class="contra-dot"></span>咽喉腫瘤、口咽部血腫（放置困難）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5: Bougie / Stylet -->
+    <div class="equip-card" data-cat="adjunct" onclick="toggleEquip(this)">
+      <div class="equip-card-head">
+        <div class="equip-icon-wrap" style="background:var(--teal-bg);">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--teal)" stroke-width="1.5"><path d="M4 20 Q14 4 24 8"/><circle cx="24" cy="8" r="2"/><path d="M8 18 L6 22"/></svg>
+        </div>
+        <div class="equip-name">Bougie &amp; Stylet</div>
+        <div class="equip-sub">氣管插管引導輔助工具</div>
+        <div class="equip-tags">
+          <span class="tag tag-teal">Gum elastic bougie</span>
+          <span class="tag tag-teal">Malleable stylet</span>
+        </div>
+      </div>
+      <div class="equip-body">
+        <div class="equip-tabs">
+          <button class="equip-tab active" onclick="eqTab(event,'bougie','use')">使用方法</button>
+          <button class="equip-tab" onclick="eqTab(event,'bougie','ind')">適用時機</button>
+          <button class="equip-tab" onclick="eqTab(event,'bougie','diff')">Bougie vs Stylet</button>
+        </div>
+        <div id="bougie-use" class="equip-content active">
+          <p style="font-weight:500;color:var(--text);margin-bottom:10px;">Bougie（Gum Elastic Bougie）</p>
+          <ol class="equip-step-list">
+            <li><span class="equip-step-num">1</span><div>彎曲末端約 30–40°，以利通過聲門</div></li>
+            <li><span class="equip-step-num">2</span><div>在直接或視頻喉鏡輔助下，將 bougie 尖端引導至聲門開口</div></li>
+            <li><span class="equip-step-num">3</span><div>推進時若感覺到「搓衣板感」（tracheal clicks）代表進入氣管環之間，確認進入氣管</div></li>
+            <li><span class="equip-step-num">4</span><div>將 ETT 套在 bougie 上旋轉推進（ETT 旋轉 90° 逆時針可幫助通過聲門前緣）</div></li>
+            <li><span class="equip-step-num">5</span><div>固定 bougie，退出後充氣囊並確認位置</div></li>
+          </ol>
+        </div>
+        <div id="bougie-ind" class="equip-content">
+          <div class="alert orange" style="margin-bottom:12px;font-size:13px;"><span class="alert-icon">▲</span><div>Cormack-Lehane Grade III（僅見會厭）時的首選輔助工具</div></div>
+          <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2;">
+            <li>無法直視聲帶但可見會厭時</li>
+            <li>ETT 無法直接插入（聲門角度不佳）</li>
+            <li>Plan A 第一次嘗試失敗後的修正策略</li>
+          </ul>
+        </div>
+        <div id="bougie-diff" class="equip-content">
+          <table class="info-table" style="font-size:13px;">
+            <tr><td>Bougie</td><td>60 cm 長，柔韌，末端有角度。可在無直視情況下盲探入氣管，透過 tracheal clicks 確認位置。困難氣道首選。</td></tr>
+            <tr><td>Stylet</td><td>可塑形金屬芯，ETT 內置入。預塑形狀後隨 ETT 一起插管，視野好但 ETT 角度需調整時使用。使用後須在 ETT 進入聲帶後退出。</td></tr>
+            <tr><td>Aintree</td><td>中空，可套在纖維支氣管鏡上，用於更換氣道或 SAD→ETT 轉換。</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6: Surgical Airway -->
+    <div class="equip-card" data-cat="surgical" onclick="toggleEquip(this)">
+      <div class="equip-card-head">
+        <div class="equip-icon-wrap" style="background:var(--red-bg);">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--red)" stroke-width="1.5"><path d="M10 14 Q14 10 18 14"/><path d="M14 14 L14 24"/><circle cx="14" cy="12" r="3"/><path d="M6 8 L22 8"/><path d="M9 4 L9 8 M19 4 L19 8"/></svg>
+        </div>
+        <div class="equip-name">外科氣道</div>
+        <div class="equip-sub">Cricothyrotomy / Tracheotomy</div>
+        <div class="equip-tags">
+          <span class="tag tag-red">CICO 緊急</span>
+          <span class="tag tag-red">Scalpel-Bougie</span>
+        </div>
+      </div>
+      <div class="equip-body">
+        <div class="equip-tabs">
+          <button class="equip-tab active" onclick="eqTab(event,'surg','crico')">環甲膜切開</button>
+          <button class="equip-tab" onclick="eqTab(event,'surg','trach')">氣切管</button>
+          <button class="equip-tab" onclick="eqTab(event,'surg','nurse')">護理師角色</button>
+        </div>
+        <div id="surg-crico" class="equip-content active">
+          <div class="alert red" style="margin-bottom:12px;font-size:13px;"><span class="alert-icon">!</span><div>僅用於 CICO — 所有其他氣道建立方式均失敗，生命受威脅。<strong>Scalpel-Bougie-Tube</strong> 技術為目前建議標準。</div></div>
+          <ol class="equip-step-list">
+            <li><span class="equip-step-num">1</span><div>定位環甲膜（甲狀軟骨下緣與環狀軟骨上緣之間的凹陷）</div></li>
+            <li><span class="equip-step-num">2</span><div>Scalpel 橫向切開皮膚及環甲膜（約 1.5 cm 切口）</div></li>
+            <li><span class="equip-step-num">3</span><div>以手指或 tracheal hook 撐開切口，確保穩定</div></li>
+            <li><span class="equip-step-num">4</span><div>Bougie 插入氣管，確認「tracheal clicks」感</div></li>
+            <li><span class="equip-step-num">5</span><div>套入 ETT（6.0 cuffed）或專用 cricothyrotomy tube，充氣囊</div></li>
+            <li><span class="equip-step-num">6</span><div>確認 EtCO₂，固定管路，呼叫 ENT 計畫正式氣切</div></li>
+          </ol>
+        </div>
+        <div id="surg-trach" class="equip-content">
+          <p style="margin-bottom:12px;font-size:13px;color:var(--text2);">氣切管用於預期長期插管、困難氣道的計畫性氣道建立，或緊急氣切後的正式管路。</p>
+          <table class="info-table" style="font-size:13px;">
+            <tr><td>常見尺寸</td><td>成人 7.0–8.0 mm ID；小兒 3.5–5.0 mm</td></tr>
+            <tr><td>分類</td><td>有氣囊 / 無氣囊（長期使用）</td></tr>
+            <tr><td>內管更換</td><td>有內管型：定期取出清洗（院內每日或依 SOP）</td></tr>
+            <tr><td>護理重點</td><td>造口周圍皮膚護理；氣囊壓力監測；定期吸痰</td></tr>
+          </table>
+        </div>
+        <div id="surg-nurse" class="equip-content">
+          <div class="nursing-box">
+            <div class="nursing-box-title">CICO 發生時護理師即刻行動</div>
+            <ul>
+              <li>呼叫緊急代碼，通知外科 / ENT 即刻到場</li>
+              <li>推出環甲膜切開包，將手術刀、Bougie、ETT 6.0 備妥</li>
+              <li>準備頸部消毒（若時間允許，Betadine 或 Alcohol）</li>
+              <li>記錄時間軸：SpO₂ 何時開始下降、各項處置時間</li>
+              <li>準備體外心臟按壓（若心跳停止）</li>
+              <li>術後協助固定管路，安排緊急胸部 X 光</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /equip-grid -->
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     TAB 8: 拔管模組
+══════════════════════════════════════════════ -->
+<section id="tab-extubation" class="section">
+  <div class="section-header">
+    <div class="section-label">Extubation Module</div>
+    <h1>拔管模組</h1>
+    <p>包含拔管標準評估、高風險拔管流程、拔管後併發症處理，及術後交班模板。</p>
+  </div>
+
+  <!-- 1: EXTUBATION CRITERIA -->
+  <div class="ext-section">
+    <div class="ext-section-title">拔管標準評估</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">以下標準逐項確認，全部達標後才可考慮拔管。點擊項目勾選。</p>
+    <div class="criteria-grid">
+
+      <div class="criteria-card">
+        <div class="criteria-card-title">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--teal)" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v5l3 2"/></svg>
+          神經肌肉功能
+        </div>
+        <ul class="criteria-check-list">
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>TOF ratio &gt; 0.9（神經肌肉監測）</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>可持續抬頭 ≥ 5 秒</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>握力有力，可抵抗阻力</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>潮氣量 &gt; 5 mL/kg</li>
+        </ul>
+      </div>
+
+      <div class="criteria-card">
+        <div class="criteria-card-title">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--blue)" stroke-width="1.5"><path d="M3 10 Q10 3 17 10 Q10 17 3 10"/><circle cx="10" cy="10" r="3"/></svg>
+          意識 &amp; 配合度
+        </div>
+        <ul class="criteria-check-list">
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>對呼喚有適切反應</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>可遵從簡單指令（張嘴、握手）</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>保護性反射恢復（吞嚥、咳嗽）</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>無明顯躁動</li>
+        </ul>
+      </div>
+
+      <div class="criteria-card">
+        <div class="criteria-card-title">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--orange)" stroke-width="1.5"><path d="M10 3 Q14 8 14 13 Q14 17 10 17 Q6 17 6 13 Q6 8 10 3"/></svg>
+          呼吸 &amp; 氧合
+        </div>
+        <ul class="criteria-check-list">
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>SpO₂ &gt; 95%（FiO₂ 0.4 以下）</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>呼吸速率 10–30 次/分</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>EtCO₂ 35–45 mmHg</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>無嚴重支氣管痙攣</li>
+        </ul>
+      </div>
+
+      <div class="criteria-card">
+        <div class="criteria-card-title">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="var(--red)" stroke-width="1.5"><path d="M10 3 L10 17 M3 10 L17 10"/><circle cx="10" cy="10" r="4"/></svg>
+          血流動力學
+        </div>
+        <ul class="criteria-check-list">
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>血壓在基礎值 ±20% 內</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>心率 50–110 bpm，無嚴重心律不整</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>無持續出血或血流動力不穩</li>
+          <li onclick="checkCrit(this)"><span class="crit-box">✓</span>體溫 &gt; 36°C</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2: HIGH RISK EXTUBATION PATHWAY -->
+  <div class="ext-section">
+    <div class="ext-section-title">高風險拔管流程（DAS 指引）</div>
+    <div class="alert orange" style="margin-bottom:16px;"><span class="alert-icon">▲</span><div>以下任一情況適用高風險流程：術中插管困難、面罩通氣困難、氣道水腫、長時間俯臥位手術、頭頸部手術後。</div></div>
+    <div class="ext-pathway">
+
+      <div class="ext-step" onclick="extToggle(this)">
+        <div class="ext-step-num">1</div>
+        <div>
+          <div class="ext-step-title">術前規劃：「拔管計畫書」</div>
+          <div class="ext-step-desc">手術開始前即確認拔管策略，不在術後臨時決定</div>
+        </div>
+      </div>
+      <div class="ext-step-detail">
+        <ul>
+          <li>與術者討論：手術是否影響氣道解剖（頸部血腫風險、水腫預期）</li>
+          <li>決定拔管時機：手術室內 vs PACU vs ICU</li>
+          <li>決定是否使用 Airway Exchange Catheter（AEC）</li>
+          <li>確認備用設備就位：視頻喉鏡、SAD、再插管所需物品</li>
+        </ul>
+      </div>
+
+      <div class="ext-step high-risk-step" onclick="extToggle(this)">
+        <div class="ext-step-num">2</div>
+        <div>
+          <div class="ext-step-title">AEC 放置（高風險病人）</div>
+          <div class="ext-step-desc">拔管前預先置入 AEC，保留再插管引導通路</div>
+        </div>
+      </div>
+      <div class="ext-step-detail">
+        <ul>
+          <li>AEC 為中空導管，可保留在氣管內供再插管引導用，也可接氧氣供氧</li>
+          <li>置入深度：成人 23–25 cm（門齒），勿過深（隆突損傷風險）</li>
+          <li>拔管時固定 AEC，抽氣囊，移除 ETT，AEC 暫時留置</li>
+          <li>病人清醒、氧合穩定 30–60 分鐘後再移除 AEC</li>
+          <li>若需再插管：AEC 引導下直接套入新 ETT</li>
+        </ul>
+      </div>
+
+      <div class="ext-step" onclick="extToggle(this)">
+        <div class="ext-step-num">3</div>
+        <div>
+          <div class="ext-step-title">拔管前準備</div>
+          <div class="ext-step-desc">確認所有標準達標，設備備妥後執行</div>
+        </div>
+      </div>
+      <div class="ext-step-detail">
+        <ul>
+          <li>100% O₂ 預充氧 3–5 分鐘</li>
+          <li>口腔及氣管內分泌物完全吸引乾淨</li>
+          <li>確認再插管設備在手可及處（視頻喉鏡、ETT、SAD）</li>
+          <li>血壓、心率在可接受範圍（拔管刺激可引發高血壓/心跳加速）</li>
+          <li>必要時給予 Lidocaine 1 mg/kg 減少拔管嗆咳反射</li>
+        </ul>
+      </div>
+
+      <div class="ext-step high-risk-step" onclick="extToggle(this)">
+        <div class="ext-step-num">4</div>
+        <div>
+          <div class="ext-step-title">執行拔管</div>
+          <div class="ext-step-desc">清醒拔管（首選）或深麻醉拔管（特定適應症）</div>
+        </div>
+      </div>
+      <div class="ext-step-detail">
+        <ul>
+          <li><strong>清醒拔管（優先）</strong>：病人清醒、保護性反射恢復後拔管，高風險病人的標準選擇</li>
+          <li><strong>深麻醉拔管（特定）</strong>：適用咳嗽禁忌（眼科、顱內壓、血管吻合）；氣道必須確定不困難</li>
+          <li>拔管前最後口腔抽吸，抽癟氣囊，病人吸氣末或深呼吸時拔出 ETT</li>
+          <li>立即換上面罩供氧，觀察呼吸型態</li>
+        </ul>
+      </div>
+
+      <div class="ext-step" onclick="extToggle(this)">
+        <div class="ext-step-num">5</div>
+        <div>
+          <div class="ext-step-title">拔管後 30 分鐘監測</div>
+          <div class="ext-step-desc">高風險期，護理師持續在旁</div>
+        </div>
+      </div>
+      <div class="ext-step-detail">
+        <ul>
+          <li>SpO₂ 持續監測，目標 &gt;95%</li>
+          <li>觀察呼吸型態：有無喘鳴（stridor）、吸氣性困難</li>
+          <li>頸部手術：觀察頸部腫脹、血腫徵象</li>
+          <li>若出現喉痙攣或呼吸窘迫 → 啟動對應處置流程</li>
+          <li>AEC 尚未移除者：確認 AEC 固定、病人未自行拔除</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3: COMPLICATIONS -->
+  <div class="ext-section">
+    <div class="ext-section-title">拔管後併發症處理</div>
+    <div class="complication-grid">
+
+      <div class="complication-card" onclick="this.classList.toggle('open')">
+        <div class="complication-head">
+          <span class="complication-severity sev-high">高風險</span>
+          <span class="complication-name">喉痙攣 Laryngospasm</span>
+          <span class="complication-toggle">+</span>
+        </div>
+        <div class="complication-body">
+          <h4>辨識</h4>
+          <ul><li>拔管後突發性高調喘鳴或完全無呼吸音（完全性喉痙攣）</li><li>SpO₂ 迅速下降，呼吸費力，胸骨上窩凹陷</li><li>常見誘因：拔管時刺激、分泌物、淺麻醉</li></ul>
+          <h4>處置</h4>
+          <ul>
+            <li>立即 100% O₂ 正壓面罩通氣，CPAP 25–40 cmH₂O</li>
+            <li>Larson's maneuver：雙手食指強力按壓下頷骨與乳突間凹陷</li>
+            <li>若無改善：Succinylcholine 0.1–0.5 mg/kg IV（小劑量打破痙攣）</li>
+            <li>嚴重：再插管 + 全劑量 Succinylcholine 1.5 mg/kg</li>
+            <li>記錄時間，觀察是否出現負壓性肺水腫</li>
+          </ul>
+          <div class="nursing-box" style="margin-top:10px;">
+            <div class="nursing-box-title">護理師行動</div>
+            <ul><li>立即呼叫麻醉醫師</li><li>備妥面罩 + 氧氣，執行正壓通氣</li><li>抽取 Succinylcholine 依醫囑備用</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="complication-card" onclick="this.classList.toggle('open')">
+        <div class="complication-head">
+          <span class="complication-severity sev-high">高風險</span>
+          <span class="complication-name">負壓性肺水腫 NPPO</span>
+          <span class="complication-toggle">+</span>
+        </div>
+        <div class="complication-body">
+          <h4>機轉</h4>
+          <ul><li>喉痙攣後病人用力吸氣 → 胸腔內負壓急遽升高 → 肺微血管液體外滲</li><li>通常在喉痙攣解除後 30–60 分鐘內出現</li></ul>
+          <h4>辨識</h4>
+          <ul><li>拔管後出現粉紅色泡沫狀分泌物</li><li>SpO₂ 下降，呼吸急促，肺部囉音</li><li>胸部 X 光：雙側肺浸潤</li></ul>
+          <h4>處置</h4>
+          <ul>
+            <li>高流量 O₂，必要時 CPAP / BiPAP</li>
+            <li>嚴重：再插管，PEEP 通氣</li>
+            <li>利尿劑（Furosemide）可考慮</li>
+            <li>通知 ICU 準備，持續監測</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="complication-card" onclick="this.classList.toggle('open')">
+        <div class="complication-head">
+          <span class="complication-severity sev-med">中度風險</span>
+          <span class="complication-name">殘餘肌鬆效果</span>
+          <span class="complication-toggle">+</span>
+        </div>
+        <div class="complication-body">
+          <h4>辨識</h4>
+          <ul><li>抬頭無力、握力差、呼吸淺快</li><li>SpO₂ 緩慢下降，病人焦慮感</li><li>TOF ratio &lt; 0.9</li></ul>
+          <h4>處置</h4>
+          <ul>
+            <li><strong>Rocuronium 逆轉</strong>：Sugammadex 2 mg/kg（TOF ≥2 個顫搐）或 16 mg/kg（無顫搐）</li>
+            <li><strong>Succinylcholine 無需逆轉</strong>（短效，自然代謝）</li>
+            <li>傳統逆轉：Neostigmine 0.04 mg/kg + Atropine 0.02 mg/kg</li>
+            <li>給予逆轉後待 TOF &gt; 0.9 再拔管</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="complication-card" onclick="this.classList.toggle('open')">
+        <div class="complication-head">
+          <span class="complication-severity sev-med">中度風險</span>
+          <span class="complication-name">術後喉嚨痛 / 聲音沙啞</span>
+          <span class="complication-toggle">+</span>
+        </div>
+        <div class="complication-body">
+          <h4>原因</h4>
+          <ul><li>ETT 對聲帶及氣管黏膜的機械性刺激</li><li>氣囊壓力過高（&gt;30 cmH₂O）造成缺血</li><li>手術時間長、頭頸部手術、多次插管嘗試</li></ul>
+          <h4>評估</h4>
+          <ul><li>術後詢問病人：喉嚨痛程度（NRS）、聲音變化</li><li>嚴重聲音沙啞或持續 &gt;48 小時 → 考慮 ENT 評估（聲帶麻痺？杓狀軟骨脫位？）</li></ul>
+          <h4>處置</h4>
+          <ul>
+            <li>輕度：冷飲、安撫，通常 24–48 小時內自然改善</li>
+            <li>Lidocaine 潤喉糖或含漱（若醫院有）</li>
+            <li>記錄於麻醉後訪視紀錄</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 4: HANDOVER TEMPLATE -->
+  <div class="ext-section">
+    <div class="ext-section-title">拔管後交班模板</div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">填入關鍵資訊後，系統自動產生 SBAR 格式交班內容，可複製給接手護理師或 PACU 人員。</p>
+    <div class="handover-form">
+      <div class="handover-grid">
+        <div class="handover-field">
+          <label class="handover-label">病人姓名 / 病歷號</label>
+          <input class="handover-input" id="hd-name" type="text" placeholder="王○○ / A1234567" oninput="genHandover()">
+        </div>
+        <div class="handover-field">
+          <label class="handover-label">手術名稱</label>
+          <input class="handover-input" id="hd-op" type="text" placeholder="右全髖關節置換術" oninput="genHandover()">
+        </div>
+        <div class="handover-field">
+          <label class="handover-label">麻醉方式</label>
+          <select class="handover-input" id="hd-anes" onchange="genHandover()">
+            <option value="全身麻醉">全身麻醉</option>
+            <option value="全身麻醉合併區域麻醉">全身麻醉合併區域麻醉</option>
+            <option value="脊椎麻醉">脊椎麻醉</option>
+            <option value="硬膜外麻醉">硬膜外麻醉</option>
+          </select>
+        </div>
+        <div class="handover-field">
+          <label class="handover-label">插管困難</label>
+          <select class="handover-input" id="hd-intub" onchange="genHandover()">
+            <option value="無，標準插管順利">無，標準插管順利</option>
+            <option value="有，需視頻喉鏡輔助">有，需視頻喉鏡輔助</option>
+            <option value="有，需 Bougie 輔助">有，需 Bougie 輔助</option>
+            <option value="有，嘗試 3 次以上">有，嘗試 3 次以上</option>
+            <option value="清醒纖維支氣管鏡插管">清醒纖維支氣管鏡插管</option>
+          </select>
+        </div>
+        <div class="handover-field">
+          <label class="handover-label">拔管後 SpO₂</label>
+          <input class="handover-input" id="hd-spo2" type="text" placeholder="98% (室內空氣)" oninput="genHandover()">
+        </div>
+        <div class="handover-field">
+          <label class="handover-label">拔管後神智</label>
+          <select class="handover-input" id="hd-ms" onchange="genHandover()">
+            <option value="清醒，定向感良好">清醒，定向感良好</option>
+            <option value="嗜睡，可喚醒">嗜睡，可喚醒</option>
+            <option value="半清醒，持續給氧">半清醒，持續給氧</option>
+          </select>
+        </div>
+        <div class="handover-field" style="grid-column:1/-1;">
+          <label class="handover-label">特殊注意事項</label>
+          <input class="handover-input" id="hd-notes" type="text" placeholder="例：皮瓣血流監測、引流管護理、疼痛評估" oninput="genHandover()">
+        </div>
+      </div>
+      <div class="handover-output" id="handover-output">填入上方欄位後，交班內容將自動產生於此</div>
+      <button class="btn btn-outline btn-sm" style="margin-top:12px;" onclick="copyHandover()">複製交班內容</button>
+    </div>
+  </div>
+
+</section>
+
+<script>
+// ══════════════════════════════
+// ANATOMY
+// ══════════════════════════════
+const anatomyData = {
+  nasal: { title:'鼻腔', text:'鼻腔為呼吸道的自然入口，具加溫加濕及過濾功能。鼻插管時（Nasal intubation）需先評估雙側通暢度，並使用血管收縮劑（Xylometazoline）減少出血。鼻中隔偏曲或鼻息肉會影響鼻插管路徑選擇。' },
+  tongue: { title:'舌根（舌背）', text:'舌根肥大是 Mallampati 分級升高的主要原因，也是面罩通氣困難的常見原因。麻醉誘導後肌肉鬆弛，舌根後墜阻塞咽部——此時需托下頷（jaw thrust）或置入口咽 / 鼻咽氣道輔助器。肥胖病人舌根較大，視野更差。' },
+  soft_palate: { title:'軟顎 / 懸雍垂', text:'Mallampati 分級的觀察重點。Class I 可完整看到軟顎、懸雍垂及扁桃體；Class IV 僅見硬顎。懸雍垂腫大（如術後水腫）會增加 SAD 放置難度。軟顎為口咽與鼻咽分界，吞嚥時上升關閉鼻咽。' },
+  epiglottis: { title:'會厭軟骨（Epiglottis）', text:'吞嚥時向後倒蓋聲門，防止食物誤入氣管。Macintosh 喉鏡的鏡片尖端應置於會厭谷（vallecula）——向前提起時，舌骨上韌帶間接帶起會厭，暴露聲帶。Miller 直片則直接挑起會厭。Cormack-Lehane Grade III 代表僅見會厭，Grade IV 連會厭都看不到。' },
+  vocal_cords: { title:'聲帶（Vocal Cords）', text:'真聲帶（True vocal cords）是確認插管位置的解剖標誌。ETT 應在直視下通過兩側聲帶之間。聲帶呈白色 V 形結構，兩側對稱；兩聲帶間的開口為「聲門」（Glottis）。插管後若出現聲音沙啞，需評估是否有聲帶損傷或聲帶麻痺。' },
+  thyroid_cart: { title:'甲狀軟骨', text:'喉部最大的軟骨，保護聲帶。喉結（Adam\'s apple）即甲狀軟骨前突。BURP 手法（Backward-Upward-Rightward Pressure）施力於甲狀軟骨，可改善喉鏡視野。插管嘗試失敗時，外部喉部操作（ELM）由護理師依麻醉醫師目視指示進行。' },
+  cricoid: { title:'環狀軟骨（Cricoid Cartilage）', text:'唯一呈完整圓環的喉部軟骨，位於甲狀軟骨下方。環甲膜（Cricothyroid membrane）位於甲狀軟骨與環狀軟骨之間，是 CICO 緊急環甲膜切開的目標位置。Sellick\'s maneuver（Cricoid pressure）於此施壓，壓迫食道減少誤吸風險。' },
+  trachea: { title:'氣管（Trachea）', text:'從環狀軟骨延伸至隆突，成人長約 10–13 cm，由 C 形軟骨環支撐。正確的 ETT 位置：尖端距隆突 2–4 cm（胸部 X 光確認）。成人門齒深度男性 22–23 cm，女性 20–21 cm。氣管直徑差異影響 ETT 尺寸選擇。' },
+  carina: { title:'隆突（Carina）', text:'氣管分叉為左右主支氣管的位置，約在胸骨角（Louis angle）水平（T4-T5）。ETT 過深時易滑入右主支氣管（右側角度較小），造成單側通氣。插管後聽診應在雙側腋下進行（非胸骨旁，以避免對側呼吸音誤傳）。' }
+};
+function showAnatomyInfo(key){
+  const d = anatomyData[key];
+  if(!d) return;
+  document.getElementById('sagittal-info').innerHTML = `<div class="anatomy-info-title">${d.title}</div><div>${d.text}</div>`;
+}
+
+const clData = {
+  1:{ title:'Cormack-Lehane Grade I', text:'聲帶完整暴露，插管難度低。約 85–90% 的插管屬此類。標準喉鏡即可，無需特殊輔助工具。' },
+  2:{ title:'Cormack-Lehane Grade II', text:'聲帶後部可見，前聯合被遮蓋。插管通常仍可完成，可能需要 BURP 手法或 Stylet 輔助。' },
+  3:{ title:'Cormack-Lehane Grade III', text:'僅見會厭，聲帶完全不可見。插管困難，應使用 Bougie 盲探引導，或換用視頻喉鏡。此時需告知支援並記錄。' },
+  4:{ title:'Cormack-Lehane Grade IV', text:'無聲門結構可見，甚至無法辨識會厭。預期極度困難插管，應立即啟動困難氣道流程（Plan A 已失敗），考慮 SAD、清醒插管或外科氣道。' }
+};
+function setCL(grade, btn){
+  document.querySelectorAll('.equip-filter-row button, .anatomy-panel .equip-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  [1,2,3,4].forEach(g=>{ const el=document.getElementById('cl-grade-'+g); if(el) el.style.display=g===grade?'':'none'; });
+  document.getElementById('cl-grade-text').textContent='Grade '+grade;
+  const colors=['var(--teal)','var(--blue)','var(--orange)','var(--red)'];
+  document.getElementById('cl-grade-text').setAttribute('fill',colors[grade-1]);
+  const d=clData[grade];
+  document.getElementById('cl-info-box').innerHTML=`<div class="anatomy-info-title">${d.title}</div><div>${d.text}</div>`;
+}
+
+// ══════════════════════════════
+// EQUIPMENT
+// ══════════════════════════════
+function filterEquip(cat, btn){
+  document.querySelectorAll('.equip-filter').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.equip-card').forEach(card=>{
+    card.style.display = (cat==='all'||card.dataset.cat===cat)?'':'none';
+  });
+}
+function toggleEquip(card){
+  const wasOpen=card.classList.contains('open');
+  document.querySelectorAll('.equip-card').forEach(c=>c.classList.remove('open'));
+  if(!wasOpen) card.classList.add('open');
+}
+function eqTab(e, prefix, tab){
+  e.stopPropagation();
+  const card=e.target.closest('.equip-card');
+  card.querySelectorAll('.equip-tab').forEach(t=>t.classList.remove('active'));
+  card.querySelectorAll('.equip-content').forEach(c=>c.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(prefix+'-'+tab).classList.add('active');
+}
+
+// ══════════════════════════════
+// EXTUBATION
+// ══════════════════════════════
+function checkCrit(li){ li.classList.toggle('checked'); }
+function extToggle(step){
+  const detail=step.nextElementSibling;
+  if(!detail||!detail.classList.contains('ext-step-detail')) return;
+  detail.classList.toggle('open');
+}
+
+// HANDOVER
+function genHandover(){
+  const name=document.getElementById('hd-name').value||'___';
+  const op=document.getElementById('hd-op').value||'___';
+  const anes=document.getElementById('hd-anes').value;
+  const intub=document.getElementById('hd-intub').value;
+  const spo2=document.getElementById('hd-spo2').value||'___';
+  const ms=document.getElementById('hd-ms').value;
+  const notes=document.getElementById('hd-notes').value;
+  const time=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+
+  const text=`【麻醉後拔管交班】${time}
+
+S — 情況
+  病人：${name}
+  手術：${op}（${anes}）
+
+B — 背景
+  插管情況：${intub}
+
+A — 評估
+  拔管後 SpO₂：${spo2}
+  神智狀態：${ms}
+
+R — 建議與注意
+${notes?'  '+notes:'  無特殊注意事項'}
+
+  * 若出現 SpO₂ 下降、呼吸窘迫或喘鳴，請立即通知麻醉醫師。`;
+
+  document.getElementById('handover-output').textContent=text;
+}
+function copyHandover(){
+  const text=document.getElementById('handover-output').textContent;
+  if(text.includes('填入')) return;
+  navigator.clipboard.writeText(text).then(()=>{ alert('已複製到剪貼板'); });
+}
+</script>
+</body>
+</html>
+<script>
+// ── PHASE 2 STYLES (injected) ──
+(function(){
+const s = document.createElement('style');
+s.textContent = `
+/* ── RSI TIMELINE ── */
+.rsi-version-tabs { display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap; }
+.rsi-vtab {
+  padding:9px 18px; font-size:13px; font-weight:500;
+  border-radius:var(--radius); cursor:pointer;
+  border:1px solid var(--border2); background:var(--surface2);
+  color:var(--text2); font-family:var(--font); transition:all .2s;
+}
+.rsi-vtab.active { border-color:var(--teal-border); background:var(--teal-bg); color:var(--teal); }
+
+.timeline { position:relative; padding-left:48px; }
+.timeline::before {
+  content:''; position:absolute; left:20px; top:12px; bottom:12px;
+  width:2px; background:var(--border2); border-radius:1px;
+}
+.tl-item { position:relative; margin-bottom:4px; }
+.tl-dot {
+  position:absolute; left:-36px; top:14px;
+  width:14px; height:14px; border-radius:50%;
+  border:2px solid var(--border2); background:var(--surface);
+  display:flex; align-items:center; justify-content:center;
+  transition:all .3s;
+}
+.tl-dot.done { background:var(--teal); border-color:var(--teal); }
+.tl-dot.active-dot { background:var(--blue); border-color:var(--blue); box-shadow:0 0 0 4px var(--blue-bg); }
+.tl-dot.warn { background:var(--orange); border-color:var(--orange); }
+.tl-dot.crit { background:var(--red); border-color:var(--red); }
+
+.tl-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); margin-bottom:8px;
+  overflow:hidden; cursor:pointer; transition:border-color .2s;
+}
+.tl-card:hover { border-color:var(--border2); }
+.tl-card.tl-warn { border-left:3px solid var(--orange); }
+.tl-card.tl-crit { border-left:3px solid var(--red); }
+.tl-card.tl-done-card { opacity:.7; }
+
+.tl-header {
+  display:flex; align-items:center; gap:14px;
+  padding:14px 18px;
+}
+.tl-time {
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  color:var(--teal); min-width:52px; flex-shrink:0;
+}
+.tl-time.t-warn { color:var(--orange); }
+.tl-time.t-crit { color:var(--red); }
+.tl-title { font-size:14px; font-weight:500; color:var(--text); flex:1; }
+.tl-who {
+  font-size:11px; font-family:var(--mono); padding:2px 8px;
+  border-radius:4px; flex-shrink:0;
+}
+.tl-who.rn { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-border); }
+.tl-who.md { background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple-border); }
+.tl-who.both { background:var(--teal-bg); color:var(--teal); border:1px solid var(--teal-border); }
+.tl-toggle { font-size:16px; color:var(--text3); transition:transform .25s; flex-shrink:0; }
+.tl-card.open .tl-toggle { transform:rotate(45deg); }
+
+.tl-body { display:none; padding:0 18px 16px 18px; border-top:1px solid var(--border); }
+.tl-card.open .tl-body { display:block; }
+
+.drug-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:10px; margin:12px 0; }
+.drug-card {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:var(--radius); padding:12px 14px;
+}
+.drug-name { font-size:13px; font-weight:500; color:var(--text); margin-bottom:4px; font-family:var(--mono); }
+.drug-dose { font-size:12px; color:var(--text2); margin-bottom:2px; }
+.drug-note { font-size:11px; color:var(--text3); }
+
+.timer-bar-wrap { margin:16px 0 8px; }
+.timer-label { display:flex; justify-content:space-between; font-size:11px; font-family:var(--mono); color:var(--text3); margin-bottom:6px; }
+.timer-bar-bg { height:4px; background:var(--surface3); border-radius:2px; overflow:hidden; }
+.timer-bar-fill { height:100%; border-radius:2px; background:var(--teal); transition:width 1s linear; }
+
+.rsi-progress-row {
+  display:flex; gap:6px; margin-bottom:24px; flex-wrap:wrap; align-items:center;
+}
+.rsi-prog-btn {
+  font-size:11px; font-family:var(--mono); padding:4px 10px;
+  border-radius:4px; border:1px solid var(--border); background:var(--surface2);
+  color:var(--text3); cursor:pointer; transition:all .2s; font-family:var(--font);
+}
+.rsi-prog-btn.done-step { background:var(--teal-bg); border-color:var(--teal-border); color:var(--teal); }
+.rsi-reset-btn {
+  margin-left:auto; font-size:12px; padding:4px 12px;
+  border-radius:4px; border:1px solid var(--border2); background:transparent;
+  color:var(--text2); cursor:pointer; font-family:var(--font);
+}
+
+/* ── ASSESSMENT TOOL ── */
+.assess-layout { display:grid; grid-template-columns:1fr 340px; gap:24px; }
+@media(max-width:800px){ .assess-layout { grid-template-columns:1fr; } }
+
+.assess-panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; }
+.assess-section-title {
+  font-size:12px; font-family:var(--mono); letter-spacing:.1em;
+  text-transform:uppercase; color:var(--teal); margin-bottom:14px;
+}
+.assess-item { margin-bottom:14px; }
+.assess-label { font-size:13px; color:var(--text2); margin-bottom:6px; display:flex; justify-content:space-between; }
+.assess-label span { font-family:var(--mono); font-size:11px; color:var(--text3); }
+.assess-options { display:flex; gap:6px; flex-wrap:wrap; }
+.ao-btn {
+  font-size:12px; padding:5px 12px; border-radius:var(--radius);
+  border:1px solid var(--border2); background:var(--surface2);
+  color:var(--text2); cursor:pointer; font-family:var(--font); transition:all .2s;
+}
+.ao-btn:hover { border-color:var(--border); color:var(--text); }
+.ao-btn.sel { background:var(--blue-bg); border-color:var(--blue-border); color:var(--blue); }
+.ao-btn.sel-warn { background:var(--orange-bg); border-color:var(--orange-border); color:var(--orange); }
+.ao-btn.sel-crit { background:var(--red-bg); border-color:var(--red-border); color:var(--red); }
+
+.mallampati-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:6px; }
+.mp-btn {
+  border:1px solid var(--border2); background:var(--surface2); border-radius:var(--radius);
+  padding:10px 4px; cursor:pointer; text-align:center; transition:all .2s; font-family:var(--font);
+}
+.mp-btn:hover { border-color:var(--border); }
+.mp-btn.sel { border-color:var(--blue-border); background:var(--blue-bg); }
+.mp-btn.sel-warn { border-color:var(--orange-border); background:var(--orange-bg); }
+.mp-btn.sel-crit { border-color:var(--red-border); background:var(--red-bg); }
+.mp-class { font-size:13px; font-weight:500; }
+.mp-desc { font-size:10px; color:var(--text3); margin-top:2px; line-height:1.3; }
+
+/* SVG mouth illustrations */
+.mp-svg { display:block; margin:0 auto 6px; }
+
+.report-panel { position:sticky; top:72px; }
+.report-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-lg); padding:22px; margin-bottom:16px;
+}
+.report-title { font-size:13px; font-weight:500; color:var(--text); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+.risk-gauge { margin:12px 0 16px; }
+.gauge-track { height:8px; background:var(--surface3); border-radius:4px; overflow:hidden; margin-bottom:8px; position:relative; }
+.gauge-fill { height:100%; border-radius:4px; transition:width .5s, background .5s; }
+.gauge-labels { display:flex; justify-content:space-between; font-size:10px; font-family:var(--mono); color:var(--text3); }
+.score-display { font-size:36px; font-weight:600; font-family:var(--mono); color:var(--text); line-height:1; }
+.score-max { font-size:14px; color:var(--text3); font-family:var(--mono); }
+.risk-level-badge {
+  display:inline-block; font-size:12px; font-family:var(--mono);
+  padding:4px 12px; border-radius:4px; margin:8px 0;
+}
+
+.report-findings { margin:12px 0; }
+.finding-row {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:8px 0; border-bottom:1px solid var(--border);
+  font-size:13px; color:var(--text2);
+}
+.finding-row:last-child { border-bottom:none; }
+.finding-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+
+.recommend-box {
+  border-radius:var(--radius); padding:14px 16px; margin-top:12px; font-size:13px;
+}
+
+.das-section { margin-top:24px; }
+.das-item { margin-bottom:14px; }
+.das-q { font-size:13px; color:var(--text2); margin-bottom:6px; }
+.das-check-group { display:flex; gap:8px; }
+.das-check {
+  flex:1; padding:8px 12px; border-radius:var(--radius); border:1px solid var(--border2);
+  background:var(--surface2); color:var(--text2); cursor:pointer;
+  font-size:12px; font-family:var(--font); text-align:center; transition:all .2s;
+}
+.das-check:hover { border-color:var(--border); }
+.das-check.sel { background:var(--teal-bg); border-color:var(--teal-border); color:var(--teal); }
+.das-check.sel-risk { background:var(--orange-bg); border-color:var(--orange-border); color:var(--orange); }
+.das-check.sel-high { background:var(--red-bg); border-color:var(--red-border); color:var(--red); }
+.das-risk-result { margin-top:12px; border-radius:var(--radius); padding:12px 16px; font-size:13px; }
+
+.print-btn {
+  display:flex; align-items:center; gap:8px;
+  width:100%; padding:10px 16px; border-radius:var(--radius);
+  border:1px solid var(--border2); background:var(--surface2);
+  color:var(--text2); cursor:pointer; font-size:13px; font-family:var(--font);
+  transition:all .2s; margin-top:12px;
+}
+.print-btn:hover { border-color:var(--teal-border); color:var(--teal); }
+`;
+document.head.appendChild(s);
+})();
+</script>
+
+<!-- ══════════════════════════════════════════════════
+     TAB 4: RSI 時序軸
+══════════════════════════════════════════════════ -->
+<section id="tab-rsi" class="section">
+  <div class="section-header">
+    <div class="section-label">Rapid Sequence Intubation</div>
+    <h1>RSI 時序軸</h1>
+    <p>選擇版本後，依時間軸逐步勾選完成。藍色標籤為護理師主責，紫色為麻醉醫師主責，綠色為共同執行。</p>
+  </div>
+
+  <div class="rsi-version-tabs">
+    <button class="rsi-vtab active" onclick="switchRSI('std',this)">標準成人 RSI</button>
+    <button class="rsi-vtab" onclick="switchRSI('obs',this)">產科改良版</button>
+    <button class="rsi-vtab" onclick="switchRSI('ped',this)">小兒版</button>
+  </div>
+
+  <!-- ── STANDARD RSI ── -->
+  <div id="rsi-std">
+    <div class="rsi-progress-row" id="prog-std"></div>
+    <div class="timeline" id="tl-std">
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-0"></div>
+        <div class="tl-card" onclick="tlToggle(this,'std',0)">
+          <div class="tl-header">
+            <span class="tl-time">T − 15</span>
+            <span class="tl-title">術前確認 &amp; 設備備妥</span>
+            <span class="tl-who rn">護理師</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>確認困難氣道車就位、開蓋備用</li>
+              <li>視頻喉鏡充電確認、備用喉鏡片（#3 / #4）</li>
+              <li>ETT 尺寸備妥（首選 + 一號備用）；男性 7.5/8.0，女性 7.0/7.5</li>
+              <li>10mL 空針充入氣囊（測試後抽回）</li>
+              <li>固定膠帶剪好備用</li>
+              <li>Suction 確認功能正常、尖端在手可及處</li>
+              <li>呼吸器設定完成（TV、RR、PEEP）</li>
+              <li>EtCO₂ 感應器連接備妥</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-1"></div>
+        <div class="tl-card" onclick="tlToggle(this,'std',1)">
+          <div class="tl-header">
+            <span class="tl-time">T − 10</span>
+            <span class="tl-title">藥物準備與抽藥</span>
+            <span class="tl-who rn">護理師</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <div class="drug-grid">
+              <div class="drug-card">
+                <div class="drug-name">Propofol</div>
+                <div class="drug-dose">1.5–2.5 mg/kg IV</div>
+                <div class="drug-note">血動力不穩者減量至 1 mg/kg</div>
+              </div>
+              <div class="drug-card">
+                <div class="drug-name">Rocuronium</div>
+                <div class="drug-dose">1.2 mg/kg IV（RSI 劑量）</div>
+                <div class="drug-note">備 Sugammadex 16 mg/kg 逆轉用</div>
+              </div>
+              <div class="drug-card">
+                <div class="drug-name">Succinylcholine</div>
+                <div class="drug-dose">1.5 mg/kg IV</div>
+                <div class="drug-note">備選；禁忌：高K⁺、燒燙傷、神經病變</div>
+              </div>
+              <div class="drug-card">
+                <div class="drug-name">Atropine</div>
+                <div class="drug-dose">0.5 mg IV（備用）</div>
+                <div class="drug-note">心搏過緩時使用</div>
+              </div>
+            </div>
+            <div class="alert orange" style="margin-top:4px;font-size:13px;">
+              <span class="alert-icon">▲</span>
+              <div>所有抽好藥物需完成三讀五對、貼標籤，標示藥名/濃度/抽藥時間。高警訊藥物（Succinylcholine、Rocuronium）需雙人核對。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-2"></div>
+        <div class="tl-card" onclick="tlToggle(this,'std',2)">
+          <div class="tl-header">
+            <span class="tl-time">T − 5</span>
+            <span class="tl-title">病人準備 &amp; 預充氧</span>
+            <span class="tl-who both">共同執行</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>確認 IV 通暢（沖生食鹽水確認）</li>
+              <li>監測器全部連接：ECG、SpO₂、NIBP、EtCO₂</li>
+              <li>床頭抬高 20–30°（Ramped position，尤其肥胖病人）</li>
+              <li><strong style="color:var(--text);">預充氧：100% O₂，面罩緊密貼合，≥ 3 分鐘</strong>（或 8 次潮氣量深呼吸）</li>
+              <li>目標：EtO₂ &gt; 90%（氮氣沖洗完成指標）</li>
+              <li>確認手術台位置、喉鏡持手順手方向</li>
+            </ul>
+            <div class="timer-bar-wrap">
+              <div class="timer-label"><span>預充氧計時器</span><span id="preo2-timer-std">3:00</span></div>
+              <div class="timer-bar-bg"><div class="timer-bar-fill" id="preo2-bar-std" style="width:0%"></div></div>
+              <div style="margin-top:8px;display:flex;gap:8px;">
+                <button class="btn btn-outline btn-sm" onclick="startPreO2('std')">開始計時</button>
+                <button class="btn btn-outline btn-sm" onclick="resetPreO2('std')">重置</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-3"></div>
+        <div class="tl-card tl-warn" onclick="tlToggle(this,'std',3)">
+          <div class="tl-header">
+            <span class="tl-time t-warn">T − 0</span>
+            <span class="tl-title">誘導給藥</span>
+            <span class="tl-who md">麻醉醫師</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>停止面罩通氣，維持面罩覆蓋供氧</li>
+              <li>給予誘導藥（Propofol）→ 確認睫毛反射消失</li>
+              <li>給予肌鬆藥（Rocuronium 1.2 mg/kg 或 Succinylcholine 1.5 mg/kg）</li>
+              <li>Succinylcholine：等待 45–60 秒後（fasciculation 消退）再插管</li>
+              <li>Rocuronium：等待 60–90 秒後再插管</li>
+              <li><strong style="color:var(--orange);">不進行 Bag-mask ventilation（RSI 核心原則）</strong></li>
+            </ul>
+            <div class="alert blue" style="margin-top:8px;font-size:13px;">
+              <span class="alert-icon">◎</span>
+              <div>護理師於此時確認 Suction 在手，並監測 SpO₂。若 SpO₂ 開始下降，立即告知麻醉醫師。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-4"></div>
+        <div class="tl-card tl-warn" onclick="tlToggle(this,'std',4)">
+          <div class="tl-header">
+            <span class="tl-time t-warn">T + 1</span>
+            <span class="tl-title">喉鏡置入 &amp; 插管</span>
+            <span class="tl-who md">麻醉醫師</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>喉鏡置入，暴露聲帶（Cormack-Lehane 分級紀錄）</li>
+              <li>必要時護理師執行 BURP / ELM</li>
+              <li>ETT 置入，通過聲帶後充氣囊（5–8 mL）</li>
+              <li>連接呼吸器 → 確認 EtCO₂ 波形出現</li>
+              <li>聽診雙側呼吸音 &amp; 胸部起伏</li>
+            </ul>
+            <div class="alert red" style="margin-top:8px;font-size:13px;">
+              <span class="alert-icon">!</span>
+              <div>EtCO₂ 無波形 → 假設食道插管，立即拔管重試。單靠胸部起伏及聲音確認不足。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-5"></div>
+        <div class="tl-card" onclick="tlToggle(this,'std',5)">
+          <div class="tl-header">
+            <span class="tl-time">T + 2</span>
+            <span class="tl-title">位置確認 &amp; 固定</span>
+            <span class="tl-who rn">護理師</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>記錄 ETT 門齒深度（男性通常 22–23 cm，女性 20–21 cm）</li>
+              <li>固定 ETT：膠布固定 + 牙墊放置</li>
+              <li>胸部 X 光確認（若條件允許，尖端應在隆突上方 2–4 cm）</li>
+              <li>設定呼吸器參數：TV 6–8 mL/kg IBW，RR 12–14，PEEP 5</li>
+              <li>記錄插管時間、工具、嘗試次數、Cormack-Lehane 分級</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot" id="dot-std-6"></div>
+        <div class="tl-card" onclick="tlToggle(this,'std',6)">
+          <div class="tl-header">
+            <span class="tl-time">T + 5</span>
+            <span class="tl-title">麻醉維持啟動 &amp; 記錄</span>
+            <span class="tl-who both">共同執行</span>
+            <span class="tl-toggle">+</span>
+          </div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>啟動吸入麻醉劑或靜脈 TIVA</li>
+              <li>確認鎮痛藥物（Opioid / Ketamine）</li>
+              <li>完成麻醉記錄：藥物、劑量、插管資訊</li>
+              <li>通知術者可開始手術</li>
+              <li>若使用 Succinylcholine：預期肌鬆約 10–12 分鐘，計劃後續肌鬆策略</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /timeline std -->
+  </div><!-- /rsi-std -->
+
+  <!-- ── OBSTETRIC RSI ── -->
+  <div id="rsi-obs" style="display:none;">
+    <div class="alert orange" style="margin-bottom:20px;"><span class="alert-icon">▲</span><div>產科改良版 RSI 與標準版的三大差異：<strong style="color:var(--text)">① 子宮左移全程維持</strong>、<strong style="color:var(--text)">② Cricoid pressure</strong>、<strong style="color:var(--text)">③ Ketamine 優先（若血壓偏低）</strong>。去飽和速度快，預充氧不可妥協。</div></div>
+    <div class="rsi-progress-row" id="prog-obs"></div>
+    <div class="timeline" id="tl-obs">
+
+      <div class="tl-item"><div class="tl-dot" id="dot-obs-0"></div>
+        <div class="tl-card" onclick="tlToggle(this,'obs',0)">
+          <div class="tl-header"><span class="tl-time">T − 15</span><span class="tl-title">產房 / OR 準備 &amp; 體位</span><span class="tl-who rn">護理師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li><strong style="color:var(--orange);">手術台調整左傾 15°（左臀墊高）→ 子宮左移（LUD），全程維持</strong></li>
+              <li>ETT 型號：女性 7.0（可能水腫，準備 6.5 備用）</li>
+              <li>備妥 Rapid-infusion IV 通路（至少 18G × 2）</li>
+              <li>新生兒科已通知，新生兒急救台備妥</li>
+              <li>確認子宮收縮劑：Oxytocin 已抽好備用</li>
+              <li>備妥 Magnesium sulfate（子癇前症病人）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-obs-1"></div>
+        <div class="tl-card" onclick="tlToggle(this,'obs',1)">
+          <div class="tl-header"><span class="tl-time">T − 10</span><span class="tl-title">藥物準備（產科配方）</span><span class="tl-who rn">護理師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <div class="drug-grid">
+              <div class="drug-card">
+                <div class="drug-name">Ketamine</div>
+                <div class="drug-dose">1–1.5 mg/kg IV</div>
+                <div class="drug-note">首選（維持血壓、保留反射）；子癇前症慎用</div>
+              </div>
+              <div class="drug-card">
+                <div class="drug-name">Propofol</div>
+                <div class="drug-dose">1.5–2 mg/kg IV</div>
+                <div class="drug-note">血壓穩定時可選；過量影響新生兒肌張力</div>
+              </div>
+              <div class="drug-card">
+                <div class="drug-name">Succinylcholine</div>
+                <div class="drug-dose">1.5 mg/kg IV</div>
+                <div class="drug-note">產科 RSI 優先肌鬆藥（短效、快速）</div>
+              </div>
+              <div class="drug-card">
+                <div class="drug-name">Sodium citrate</div>
+                <div class="drug-dose">0.3M 30 mL PO</div>
+                <div class="drug-note">若時間允許，術前口服中和胃酸</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-obs-2"></div>
+        <div class="tl-card" onclick="tlToggle(this,'obs',2)">
+          <div class="tl-header"><span class="tl-time">T − 5</span><span class="tl-title">預充氧 &amp; Cricoid pressure 準備</span><span class="tl-who both">共同執行</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>100% O₂ 緊密面罩，≥ 3 分鐘（孕婦 FRC 降低，去飽和快）</li>
+              <li>護理師確認 Cricoid pressure 手法：三指（食中無名）置於環狀軟骨，準備好施壓姿勢</li>
+              <li>確認胎心率（FHR）監測持續進行</li>
+              <li>左傾維持確認</li>
+            </ul>
+            <div class="timer-bar-wrap">
+              <div class="timer-label"><span>預充氧計時器</span><span id="preo2-timer-obs">3:00</span></div>
+              <div class="timer-bar-bg"><div class="timer-bar-fill" id="preo2-bar-obs" style="width:0%"></div></div>
+              <div style="margin-top:8px;display:flex;gap:8px;">
+                <button class="btn btn-outline btn-sm" onclick="startPreO2('obs')">開始計時</button>
+                <button class="btn btn-outline btn-sm" onclick="resetPreO2('obs')">重置</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-obs-3"></div>
+        <div class="tl-card tl-warn" onclick="tlToggle(this,'obs',3)">
+          <div class="tl-header"><span class="tl-time t-warn">T − 0</span><span class="tl-title">誘導 + Cricoid pressure 啟動</span><span class="tl-who both">共同執行</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>麻醉醫師下令：「給藥」→ 護理師<strong style="color:var(--orange);">同時啟動 Cricoid pressure（向後 20–30N）</strong></li>
+              <li>給予 Ketamine（或 Propofol）</li>
+              <li>給予 Succinylcholine 1.5 mg/kg</li>
+              <li>等待 45–60 秒（fasciculation 消退）</li>
+              <li>Cricoid pressure 全程持續至插管確認後才解除</li>
+            </ul>
+            <div class="alert orange" style="margin-top:8px;font-size:13px;">
+              <span class="alert-icon">▲</span><div>若施壓後插管視野變差，可依麻醉醫師指示<strong>輕度減壓</strong>（不完全解除）。過強的 Cricoid pressure 反而造成喉部偏移。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-obs-4"></div>
+        <div class="tl-card tl-warn" onclick="tlToggle(this,'obs',4)">
+          <div class="tl-header"><span class="tl-time t-warn">T + 1</span><span class="tl-title">插管 &amp; 確認</span><span class="tl-who md">麻醉醫師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>插管，確認 EtCO₂ 波形出現</li>
+              <li>確認後：麻醉醫師下令「解除 Cricoid pressure」</li>
+              <li>護理師解除 Cricoid pressure 並記錄時間</li>
+              <li>確認深度（女性 19–21 cm 門齒），充氣囊</li>
+              <li>記錄子宮切開時間 / 娩出時間（分娩後計時）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-obs-5"></div>
+        <div class="tl-card" onclick="tlToggle(this,'obs',5)">
+          <div class="tl-header"><span class="tl-time">T + 2</span><span class="tl-title">固定 &amp; 術中維持</span><span class="tl-who rn">護理師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>固定 ETT，繼續左傾維持至娩出</li>
+              <li>維持 EtCO₂ 30–35 mmHg（勿過度通氣，避免影響胎盤血流）</li>
+              <li>娩出後給予 Oxytocin 靜滴</li>
+              <li>記錄 Apgar 分數（1、5 分鐘）</li>
+              <li>若為 Succinylcholine：約 10 分鐘後評估是否追加肌鬆</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── PEDIATRIC RSI ── -->
+  <div id="rsi-ped" style="display:none;">
+    <div class="alert blue" style="margin-bottom:20px;"><span class="alert-icon">◎</span><div>小兒 RSI 核心差異：<strong style="color:var(--text)">① 需依體重精算藥物</strong>、<strong style="color:var(--text)">② ETT 尺寸依年齡/身長計算</strong>、<strong style="color:var(--text)">③ 去飽和速度更快（尤其嬰幼兒）</strong>、<strong style="color:var(--text)">④ Atropine 前驅藥考量</strong>。</div></div>
+    <div class="card" style="margin-bottom:20px;">
+      <h3 style="margin-bottom:12px;">體重輸入（藥物劑量自動計算）</h3>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div>
+          <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:6px;">體重（kg）</label>
+          <input type="number" id="ped-weight" min="3" max="50" value="20" oninput="calcPedDrugs()"
+            style="width:100px;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:16px;font-family:var(--mono);">
+        </div>
+        <div>
+          <label style="font-size:13px;color:var(--text2);display:block;margin-bottom:6px;">年齡</label>
+          <select id="ped-age" oninput="calcPedDrugs()"
+            style="padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface2);color:var(--text);font-size:14px;font-family:var(--font);">
+            <option value="infant">嬰兒（&lt;1 歲）</option>
+            <option value="toddler">幼兒（1–3 歲）</option>
+            <option value="child" selected>學齡前（4–7 歲）</option>
+            <option value="school">學齡（8–12 歲）</option>
+          </select>
+        </div>
+      </div>
+      <div class="drug-grid" id="ped-drug-grid" style="margin-top:16px;"></div>
+      <div style="margin-top:8px;padding:10px 14px;background:var(--surface2);border-radius:var(--radius);font-size:13px;color:var(--text2);">
+        <strong style="color:var(--text);">ETT 尺寸估算：</strong> <span id="ped-ett-size" style="color:var(--teal);font-family:var(--mono);"></span>
+        <span style="color:var(--text3);font-size:11px;margin-left:8px;">公式：(年齡÷4)+4（無氣囊）；有氣囊管減 0.5</span>
+      </div>
+    </div>
+    <div class="rsi-progress-row" id="prog-ped"></div>
+    <div class="timeline" id="tl-ped">
+
+      <div class="tl-item"><div class="tl-dot" id="dot-ped-0"></div>
+        <div class="tl-card" onclick="tlToggle(this,'ped',0)">
+          <div class="tl-header"><span class="tl-time">T − 15</span><span class="tl-title">設備準備（依體重）</span><span class="tl-who rn">護理師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>ETT：計算尺寸，備妥 ± 0.5 號各一支</li>
+              <li>喉鏡片：嬰兒用 Miller 直片（#1/#2），幼兒以上可用 Macintosh</li>
+              <li>面罩尺寸確認（密合測試）</li>
+              <li>備妥小兒靜脈留置針（24G/22G）</li>
+              <li>加溫毯 / 保暖設備（小兒體溫喪失快）</li>
+              <li>確認 Broselow Tape 或小兒急救卡在旁</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-ped-1"></div>
+        <div class="tl-card" onclick="tlToggle(this,'ped',1)">
+          <div class="tl-header"><span class="tl-time">T − 10</span><span class="tl-title">藥物準備（體重計算）</span><span class="tl-who rn">護理師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <div class="alert blue" style="font-size:13px;margin-bottom:12px;"><span class="alert-icon">◎</span><div>劑量依上方體重計算結果執行。小兒藥物需稀釋至適當濃度，避免量太小無法準確給藥。</div></div>
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li><strong style="color:var(--text);">Atropine 前驅藥</strong>：&lt;1 歲必給；1–5 歲插管前喉鏡置入可能引起迷走神經反射，常規給予 0.02 mg/kg（最低 0.1mg）</li>
+              <li>誘導藥：Propofol 2.5–3 mg/kg（小兒劑量較高）或 Ketamine 1–2 mg/kg</li>
+              <li>肌鬆：Succinylcholine 2 mg/kg（&lt;10 kg）/ 1.5 mg/kg（≥10 kg）；或 Rocuronium 1.2 mg/kg</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-ped-2"></div>
+        <div class="tl-card" onclick="tlToggle(this,'ped',2)">
+          <div class="tl-header"><span class="tl-time">T − 5</span><span class="tl-title">預充氧（小兒特殊注意）</span><span class="tl-who both">共同執行</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>小兒氧氣儲備少，去飽和速度為成人的 2–4 倍，預充氧更重要</li>
+              <li>合作的兒童：100% O₂ 面罩 ≥ 2 分鐘</li>
+              <li>不合作兒童：吸入誘導（Sevoflurane 8%）可替代，待熟睡後再給靜脈藥</li>
+              <li>嬰幼兒臥位：肩墊小毛巾（避免頭部過度屈曲）</li>
+            </ul>
+            <div class="timer-bar-wrap">
+              <div class="timer-label"><span>預充氧計時器</span><span id="preo2-timer-ped">2:00</span></div>
+              <div class="timer-bar-bg"><div class="timer-bar-fill" id="preo2-bar-ped" style="width:0%"></div></div>
+              <div style="margin-top:8px;display:flex;gap:8px;">
+                <button class="btn btn-outline btn-sm" onclick="startPreO2('ped',120)">開始計時</button>
+                <button class="btn btn-outline btn-sm" onclick="resetPreO2('ped',120)">重置</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item"><div class="tl-dot" id="dot-ped-3"></div>
+        <div class="tl-card tl-warn" onclick="tlToggle(this,'ped',3)">
+          <div class="tl-header"><span class="tl-time t-warn">T − 0</span><span class="tl-title">誘導 &amp; 插管</span><span class="tl-who md">麻醉醫師</span><span class="tl-toggle">+</span></div>
+          <div class="tl-body">
+            <ul style="padding-left:18px;font-size:13px;color:var(--text2);line-height:2.1;">
+              <li>Atropine 先給（若適應症）</li>
+              <li>誘導藥 → 肌鬆藥</li>
+              <li>Succinylcholine 效果：嬰幼兒約 30–45 秒，較成人快</li>
+              <li>插管後確認氣囊壓力（有氣囊管）：&lt;20 cmH₂O，以防氣管損傷</li>
+              <li>聽診腋下（小兒的頂端呼吸音與對側相似，腋下更可靠）</li>
+            </ul>
+            <div class="alert orange" style="margin-top:8px;font-size:13px;">
+              <span class="alert-icon">▲</span><div>小兒支氣管較短，ETT 容易滑入右主支氣管。深度確認需更仔細，建議胸部 X 光確認。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════
+     TAB 5: 氣道評估工具
+══════════════════════════════════════════════════ -->
+<section id="tab-assess" class="section">
+  <div class="section-header">
+    <div class="section-label">Airway Assessment Tools</div>
+    <h1>氣道評估工具</h1>
+    <p>填入評估結果，自動產生整合氣道摘要報告。報告可作為術前簡報與麻醉記錄的參考依據。</p>
+  </div>
+
+  <div class="assess-layout">
+    <!-- LEFT: Input panels -->
+    <div>
+
+      <!-- LEMON -->
+      <div class="assess-panel" style="margin-bottom:16px;">
+        <div class="assess-section-title">LEMON 氣道評估</div>
+
+        <div class="assess-item">
+          <div class="assess-label">L — 外觀 Look externally <span>異常特徵數量</span></div>
+          <div class="assess-options">
+            <button class="ao-btn" onclick="setLemon('L',0,this)">無異常 (0)</button>
+            <button class="ao-btn" onclick="setLemon('L',1,this)">1 項異常 (1)</button>
+            <button class="ao-btn" onclick="setLemon('L',2,this)">≥ 2 項異常 (2)</button>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">包含：面部外傷、鬍鬚、肥胖、切齒突出、頸部短粗</div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-label">E — 3-3-2 法則 <span>符合/不符合</span></div>
+          <div class="assess-options">
+            <button class="ao-btn" onclick="setLemon('E',0,this)">全部符合 (0)</button>
+            <button class="ao-btn" onclick="setLemon('E',1,this)">部分不符合 (1)</button>
+            <button class="ao-btn" onclick="setLemon('E',2,this)">多項不符合 (2)</button>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">切齒間距 ≥ 3 指；頦舌骨距 ≥ 3 指；甲頦距 ≥ 2 指</div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-label">M — Mallampati 分級 <span>視野分級</span></div>
+          <div class="mallampati-grid">
+            <button class="mp-btn" onclick="setMallampati(1,this)">
+              <svg class="mp-svg" width="48" height="36" viewBox="0 0 48 36" fill="none">
+                <ellipse cx="24" cy="12" rx="16" ry="10" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".3"/>
+                <path d="M14 14 Q24 28 34 14" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <rect x="18" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="26" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <ellipse cx="24" cy="20" rx="5" ry="3" fill="currentColor" opacity=".4"/>
+                <path d="M19 20 Q24 24 29 20" stroke="currentColor" stroke-width="1" fill="none" opacity=".7"/>
+              </svg>
+              <div class="mp-class" style="color:var(--teal)">Class I</div>
+              <div class="mp-desc">軟顎、懸雍垂、扁桃體均可見</div>
+            </button>
+            <button class="mp-btn" onclick="setMallampati(2,this)">
+              <svg class="mp-svg" width="48" height="36" viewBox="0 0 48 36" fill="none">
+                <ellipse cx="24" cy="12" rx="16" ry="10" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".3"/>
+                <path d="M14 14 Q24 28 34 14" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <rect x="18" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="26" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <ellipse cx="24" cy="20" rx="5" ry="3" fill="currentColor" opacity=".3"/>
+                <line x1="17" y1="20" x2="31" y2="20" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+              </svg>
+              <div class="mp-class" style="color:var(--blue)">Class II</div>
+              <div class="mp-desc">軟顎可見；懸雍垂部分被遮</div>
+            </button>
+            <button class="mp-btn" onclick="setMallampati(3,this)">
+              <svg class="mp-svg" width="48" height="36" viewBox="0 0 48 36" fill="none">
+                <ellipse cx="24" cy="12" rx="16" ry="10" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".3"/>
+                <path d="M12 16 Q24 28 36 16" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <rect x="18" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="26" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <line x1="14" y1="16" x2="34" y2="16" stroke="currentColor" stroke-width="2" opacity=".6"/>
+              </svg>
+              <div class="mp-class" style="color:var(--orange)">Class III</div>
+              <div class="mp-desc">僅軟顎基部可見</div>
+            </button>
+            <button class="mp-btn" onclick="setMallampati(4,this)">
+              <svg class="mp-svg" width="48" height="36" viewBox="0 0 48 36" fill="none">
+                <ellipse cx="24" cy="12" rx="16" ry="10" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".3"/>
+                <path d="M10 18 Q24 28 38 18" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                <rect x="18" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="26" y="6" width="4" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="12" y="14" width="24" height="4" rx="1" fill="currentColor" opacity=".5"/>
+              </svg>
+              <div class="mp-class" style="color:var(--red)">Class IV</div>
+              <div class="mp-desc">僅硬顎可見</div>
+            </button>
+          </div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-label">O — 阻塞 Obstruction <span>有/無</span></div>
+          <div class="assess-options">
+            <button class="ao-btn" onclick="setLemon('O',0,this)">無阻塞 (0)</button>
+            <button class="ao-btn" onclick="setLemon('O',2,this)">有阻塞 (2)</button>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">包含：會厭炎、扁桃體腫大、異物、腫瘤、血腫</div>
+        </div>
+
+        <div class="assess-item">
+          <div class="assess-label">N — 頸部活動度 Neck mobility <span>正常/受限</span></div>
+          <div class="assess-options">
+            <button class="ao-btn" onclick="setLemon('N',0,this)">正常 (0)</button>
+            <button class="ao-btn" onclick="setLemon('N',1,this)">輕度受限 (1)</button>
+            <button class="ao-btn" onclick="setLemon('N',2,this)">嚴重受限 (2)</button>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">後仰伸展角度；頸椎固定、放療後、肥胖等影響</div>
+        </div>
+      </div>
+
+      <!-- DAS Extubation Risk -->
+      <div class="assess-panel das-section">
+        <div class="assess-section-title">DAS 拔管風險評估</div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:16px;">依據 Difficult Airway Society 2012 拔管指引，評估拔管風險等級。</p>
+
+        <div class="das-item">
+          <div class="das-q">術中插管困難或插管嘗試 ≥ 2 次？</div>
+          <div class="das-check-group">
+            <button class="das-check" onclick="setDAS('intub_diff','no',this)">否</button>
+            <button class="das-check sel-risk" onclick="setDAS('intub_diff','yes',this)">是（高風險因素）</button>
+          </div>
+        </div>
+        <div class="das-item">
+          <div class="das-q">面罩通氣困難？</div>
+          <div class="das-check-group">
+            <button class="das-check" onclick="setDAS('mask_diff','no',this)">否</button>
+            <button class="das-check sel-risk" onclick="setDAS('mask_diff','yes',this)">是（高風險因素）</button>
+          </div>
+        </div>
+        <div class="das-item">
+          <div class="das-q">拔管後有誤吸風險？（飽胃、腸阻塞、胃食道逆流）</div>
+          <div class="das-check-group">
+            <button class="das-check" onclick="setDAS('aspiration','no',this)">否</button>
+            <button class="das-check sel-risk" onclick="setDAS('aspiration','yes',this)">是</button>
+          </div>
+        </div>
+        <div class="das-item">
+          <div class="das-q">氣道水腫風險？（長時間手術、俯臥位、大量輸液、頭頸部手術）</div>
+          <div class="das-check-group">
+            <button class="das-check" onclick="setDAS('edema','no',this)">否</button>
+            <button class="das-check sel-risk" onclick="setDAS('edema','yes',this)">是</button>
+          </div>
+        </div>
+        <div class="das-item">
+          <div class="das-q">病人目前血流動力學穩定？</div>
+          <div class="das-check-group">
+            <button class="das-check" onclick="setDAS('hemostable','yes',this)">是</button>
+            <button class="das-check sel-high" onclick="setDAS('hemostable','no',this)">否（不穩定）</button>
+          </div>
+        </div>
+        <div class="das-item">
+          <div class="das-q">意識清醒、可合作？</div>
+          <div class="das-check-group">
+            <button class="das-check" onclick="setDAS('awake','yes',this)">是</button>
+            <button class="das-check sel-risk" onclick="setDAS('awake','no',this)">否</button>
+          </div>
+        </div>
+        <div id="das-result" class="das-risk-result" style="display:none;"></div>
+      </div>
+
+    </div><!-- /left -->
+
+    <!-- RIGHT: Report panel -->
+    <div class="report-panel">
+      <div class="report-card">
+        <div class="report-title">整合氣道評估報告</div>
+
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px;">
+          <span class="score-display" id="lemon-score">—</span>
+          <span class="score-max">/ 10</span>
+        </div>
+        <div id="lemon-badge" class="risk-level-badge" style="background:var(--surface2);color:var(--text3);">尚未完成評估</div>
+
+        <div class="risk-gauge">
+          <div class="gauge-track">
+            <div class="gauge-fill" id="gauge-fill" style="width:0%;background:var(--teal);"></div>
+          </div>
+          <div class="gauge-labels"><span>低風險</span><span>中風險</span><span>高風險</span></div>
+        </div>
+
+        <div class="report-findings" id="report-findings">
+          <div style="font-size:13px;color:var(--text3);padding:12px 0;">請完成左側評估項目</div>
+        </div>
+
+        <div id="recommend-box" class="recommend-box" style="display:none;"></div>
+
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text3);font-family:var(--mono);margin-bottom:8px;">DAS 拔管評估</div>
+        <div id="das-summary" style="font-size:13px;color:var(--text3);">尚未評估</div>
+
+        <button class="print-btn" onclick="printReport()">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2h8l3 3v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M6 2v5h8V2"/></svg>
+          列印 / 匯出報告
+        </button>
+      </div>
+
+      <div class="card" style="font-size:13px;color:var(--text2);">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:8px;">LEMON 分級標準</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;"><span>0 – 4</span><span class="tag tag-teal">低風險</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>5 – 7</span><span class="tag tag-orange">中風險</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>8 – 10</span><span class="tag tag-red">高風險</span></div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:11px;font-family:var(--mono);color:var(--text3);margin-bottom:6px;">Mallampati 臨床意義</div>
+        <div style="font-size:12px;color:var(--text3);line-height:1.8;">
+          Class I/II → 通常無困難插管<br>
+          Class III → 插管困難風險上升<br>
+          Class IV → 困難插管機率高，備妥替代計畫
+        </div>
+      </div>
+    </div><!-- /right -->
+  </div>
+</section>
+
+<script>
+// ══════════════════════════════════════════════════
+// RSI TIMELINE LOGIC
+// ══════════════════════════════════════════════════
+
+const rsiVersions = ['std','obs','ped'];
+const rsiStepCounts = { std:7, obs:6, ped:4 };
+const rsiStepsDone = { std:{}, obs:{}, ped:{} };
+
+function switchRSI(ver, btn) {
+  rsiVersions.forEach(v => {
+    const el = document.getElementById('rsi-'+v);
+    if(el) el.style.display = v===ver ? '' : 'none';
+  });
+  document.querySelectorAll('.rsi-vtab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  if(!document.getElementById('prog-'+ver).children.length) initRSIProg(ver);
+}
+
+function initRSIProg(ver) {
+  const prog = document.getElementById('prog-'+ver);
+  prog.innerHTML = '';
+  const n = rsiStepCounts[ver];
+  for(let i=0;i<n;i++){
+    const b = document.createElement('button');
+    b.className = 'rsi-prog-btn';
+    b.id = 'progbtn-'+ver+'-'+i;
+    b.textContent = 'Step '+(i+1);
+    b.onclick = ()=>{ markStep(ver,i,b); };
+    prog.appendChild(b);
+  }
+  const rb = document.createElement('button');
+  rb.className = 'rsi-reset-btn';
+  rb.textContent = '全部重置';
+  rb.onclick = ()=>resetRSI(ver);
+  prog.appendChild(rb);
+}
+
+function tlToggle(card, ver, idx) {
+  card.classList.toggle('open');
+}
+
+function markStep(ver, idx, btn) {
+  rsiStepsDone[ver][idx] = !rsiStepsDone[ver][idx];
+  btn.classList.toggle('done-step', !!rsiStepsDone[ver][idx]);
+  const dot = document.getElementById('dot-'+ver+'-'+idx);
+  if(dot) dot.classList.toggle('done', !!rsiStepsDone[ver][idx]);
+}
+
+function resetRSI(ver) {
+  rsiStepsDone[ver] = {};
+  const n = rsiStepCounts[ver];
+  for(let i=0;i<n;i++){
+    const b = document.getElementById('progbtn-'+ver+'-'+i);
+    if(b) b.classList.remove('done-step');
+    const d = document.getElementById('dot-'+ver+'-'+i);
+    if(d) d.classList.remove('done');
+  }
+}
+
+// init std progress on load
+initRSIProg('std');
+
+// ── PreO2 Timers ──
+const preO2Timers = {};
+function startPreO2(ver, seconds=180) {
+  if(preO2Timers[ver]) { clearInterval(preO2Timers[ver]); }
+  let elapsed = 0;
+  const bar = document.getElementById('preo2-bar-'+ver);
+  const label = document.getElementById('preo2-timer-'+ver);
+  preO2Timers[ver] = setInterval(()=>{
+    elapsed++;
+    const pct = Math.min((elapsed/seconds)*100, 100);
+    bar.style.width = pct+'%';
+    const rem = Math.max(seconds - elapsed, 0);
+    const m = Math.floor(rem/60);
+    const s = rem%60;
+    label.textContent = m+':'+(s<10?'0':'')+s;
+    if(elapsed >= seconds) {
+      clearInterval(preO2Timers[ver]);
+      bar.style.background = 'var(--teal)';
+      label.textContent = '完成';
+    }
+  }, 1000);
+}
+
+function resetPreO2(ver, seconds=180) {
+  if(preO2Timers[ver]) clearInterval(preO2Timers[ver]);
+  document.getElementById('preo2-bar-'+ver).style.width = '0%';
+  const m = Math.floor(seconds/60);
+  const s = seconds%60;
+  document.getElementById('preo2-timer-'+ver).textContent = m+':'+(s<10?'0':'')+s;
+}
+
+// ── Pediatric Drug Calc ──
+function calcPedDrugs() {
+  const w = parseFloat(document.getElementById('ped-weight').value)||20;
+  const age = document.getElementById('ped-age').value;
+  const ageYrs = {infant:0.5,toddler:2,child:5,school:10}[age];
+  const ettNoC = Math.round(((ageYrs/4)+4)*2)/2;
+  const ettC = ettNoC - 0.5;
+  document.getElementById('ped-ett-size').textContent =
+    `無氣囊管 ${ettNoC.toFixed(1)} mm，有氣囊管 ${ettC.toFixed(1)} mm`;
+
+  const atropDose = Math.max(0.02*w, 0.1).toFixed(2);
+  const propDose = (2.5*w).toFixed(0)+' – '+(3*w).toFixed(0);
+  const ketDose = (1*w).toFixed(0)+' – '+(2*w).toFixed(0);
+  const suxDose = w<10 ? (2*w).toFixed(1) : (1.5*w).toFixed(1);
+  const rocDose = (1.2*w).toFixed(1);
+  const sugDose = (16*w).toFixed(0);
+
+  document.getElementById('ped-drug-grid').innerHTML = `
+    <div class="drug-card"><div class="drug-name">Atropine</div><div class="drug-dose">${atropDose} mg IV</div><div class="drug-note">&lt;5 歲常規前驅；最低 0.1 mg</div></div>
+    <div class="drug-card"><div class="drug-name">Propofol</div><div class="drug-dose">${propDose} mg IV</div><div class="drug-note">2.5–3 mg/kg × ${w} kg</div></div>
+    <div class="drug-card"><div class="drug-name">Ketamine</div><div class="drug-dose">${ketDose} mg IV</div><div class="drug-note">1–2 mg/kg × ${w} kg</div></div>
+    <div class="drug-card"><div class="drug-name">Succinylcholine</div><div class="drug-dose">${suxDose} mg IV</div><div class="drug-note">${w<10?'2':'1.5'} mg/kg × ${w} kg</div></div>
+    <div class="drug-card"><div class="drug-name">Rocuronium</div><div class="drug-dose">${rocDose} mg IV</div><div class="drug-note">1.2 mg/kg × ${w} kg</div></div>
+    <div class="drug-card"><div class="drug-name">Sugammadex</div><div class="drug-dose">${sugDose} mg IV</div><div class="drug-note">逆轉 Rocuronium 16 mg/kg</div></div>
+  `;
+}
+calcPedDrugs();
+
+// ══════════════════════════════════════════════════
+// ASSESSMENT TOOL LOGIC
+// ══════════════════════════════════════════════════
+
+const lemonScores = { L:null, E:null, M:null, O:null, N:null };
+const dasAnswers = {};
+
+function setLemon(key, val, btn) {
+  lemonScores[key] = val;
+  // deselect siblings
+  btn.parentElement.querySelectorAll('.ao-btn').forEach(b=>{
+    b.classList.remove('sel','sel-warn','sel-crit');
+  });
+  const cls = val===0?'sel':val===1?'sel-warn':'sel-crit';
+  btn.classList.add(cls);
+  updateReport();
+}
+
+function setMallampati(cls, btn) {
+  document.querySelectorAll('.mp-btn').forEach(b=>b.classList.remove('sel','sel-warn','sel-crit'));
+  const score = cls<=2?0:cls===3?1:2;
+  lemonScores['M'] = score;
+  const c = score===0?'sel':score===1?'sel-warn':'sel-crit';
+  btn.classList.add(c);
+  updateReport();
+}
+
+function setDAS(key, val, btn) {
+  dasAnswers[key] = val;
+  btn.parentElement.querySelectorAll('.das-check').forEach(b=>b.classList.remove('sel','sel-risk','sel-high'));
+  // reapply correct class
+  const riskKeys = ['intub_diff','mask_diff','aspiration','edema'];
+  const highKeys = ['hemostable'];
+  const yesIsGood = ['hemostable','awake'];
+  if(yesIsGood.includes(key)) {
+    btn.classList.add(val==='yes'?'sel':'sel-risk');
+  } else {
+    btn.classList.add(val==='yes'?'sel-risk':'sel');
+  }
+  updateDASResult();
+  updateReport();
+}
+
+function updateDASResult() {
+  const d = dasAnswers;
+  const highRisk = d.intub_diff==='yes'||d.mask_diff==='yes';
+  const addRisk = d.aspiration==='yes'||d.edema==='yes';
+  const unstable = d.hemostable==='no';
+  const notAwake = d.awake==='no';
+  const res = document.getElementById('das-result');
+
+  const answered = Object.keys(d).length;
+  if(answered < 2) return;
+  res.style.display = 'block';
+
+  if(highRisk||unstable) {
+    res.style.background='var(--red-bg)'; res.style.border='1px solid var(--red-border)'; res.style.color='#f0b8b8';
+    res.innerHTML='<strong style="color:var(--red);">高風險拔管</strong><br>建議使用 Airway Exchange Catheter（AEC）拔管，或在具備再插管條件的情境下進行。考慮 ICU 後續照護。';
+  } else if(addRisk||notAwake) {
+    res.style.background='var(--orange-bg)'; res.style.border='1px solid var(--orange-border)'; res.style.color='#f0cfa8';
+    res.innerHTML='<strong style="color:var(--orange);">中度風險拔管</strong><br>確保病人清醒、合作、神經肌肉阻斷完全逆轉後再拔管。備妥拔管後再插管設備。';
+  } else {
+    res.style.background='var(--teal-bg)'; res.style.border='1px solid var(--teal-border)'; res.style.color='var(--teal)';
+    res.innerHTML='<strong>低風險拔管</strong><br>標準拔管程序。仍需確認神經肌肉完全逆轉（TOF &gt;0.9）及生命徵象穩定。';
+  }
+  const sum = document.getElementById('das-summary');
+  if(sum) sum.textContent = highRisk||unstable?'高風險':addRisk||notAwake?'中度風險':'低風險';
+  sum.style.color = highRisk||unstable?'var(--red)':addRisk||notAwake?'var(--orange)':'var(--teal)';
+}
+
+function updateReport() {
+  const vals = Object.values(lemonScores).filter(v=>v!==null);
+  if(vals.length===0) return;
+
+  const total = vals.reduce((a,b)=>a+b,0);
+  const scoreEl = document.getElementById('lemon-score');
+  const badge = document.getElementById('lemon-badge');
+  const gauge = document.getElementById('gauge-fill');
+  const findingsEl = document.getElementById('report-findings');
+  const recBox = document.getElementById('recommend-box');
+
+  scoreEl.textContent = total;
+
+  const pct = Math.min((total/10)*100,100);
+  gauge.style.width = pct+'%';
+
+  let riskLevel, riskColor, riskBg;
+  if(total<=4){ riskLevel='低風險'; riskColor='var(--teal)'; riskBg='var(--teal-bg)'; gauge.style.background='var(--teal)'; }
+  else if(total<=7){ riskLevel='中風險'; riskColor='var(--orange)'; riskBg='var(--orange-bg)'; gauge.style.background='var(--orange)'; }
+  else { riskLevel='高風險'; riskColor='var(--red)'; riskBg='var(--red-bg)'; gauge.style.background='var(--red)'; }
+
+  badge.textContent = riskLevel + ' (LEMON ' + total + '/10)';
+  badge.style.background = riskBg;
+  badge.style.color = riskColor;
+  badge.style.border = '1px solid ' + riskColor.replace(')','-border)').replace('var(--','var(--color-border-');
+  badge.style.border = `1px solid ${riskColor}`;
+
+  // Findings
+  const findings = [];
+  const labels = {L:'外觀 (L)',E:'3-3-2 法則 (E)',M:'Mallampati (M)',O:'阻塞 (O)',N:'頸部活動 (N)'};
+  const keys = ['L','E','M','O','N'];
+  keys.forEach(k=>{
+    const v = lemonScores[k];
+    if(v===null) return;
+    const dotColor = v===0?'var(--teal)':v===1?'var(--orange)':'var(--red)';
+    const desc = v===0?'正常':v===1?'輕度異常':'明顯異常/高風險';
+    findings.push(`<div class="finding-row"><span class="finding-dot" style="background:${dotColor}"></span><div><span style="color:var(--text)">${labels[k]}</span> — <span style="color:${dotColor}">${desc}</span></div></div>`);
+  });
+  findingsEl.innerHTML = findings.join('') || '<div style="font-size:13px;color:var(--text3);padding:8px 0;">繼續填入評估項目</div>';
+
+  // Recommendation
+  recBox.style.display = 'block';
+  if(total<=4){
+    recBox.style.background='var(--teal-bg)'; recBox.style.border='1px solid var(--teal-border)'; recBox.style.color='var(--teal)';
+    recBox.innerHTML='<strong>建議</strong>：標準喉鏡插管可行。備妥視頻喉鏡作為替代方案即可。';
+  } else if(total<=7){
+    recBox.style.background='var(--orange-bg)'; recBox.style.border='1px solid var(--orange-border)'; recBox.style.color='#f0cfa8';
+    recBox.innerHTML='<strong>建議</strong>：優先使用視頻喉鏡。確保困難氣道車就位，備妥 SAD 及 Bougie。考慮告知上級醫師。';
+  } else {
+    recBox.style.background='var(--red-bg)'; recBox.style.border='1px solid var(--red-border)'; recBox.style.color='#f0b8b8';
+    recBox.innerHTML='<strong>建議</strong>：預期困難氣道。依 ASA 演算法評估清醒插管可行性，告知主治醫師，確認備用計畫（清醒 FOB、SAD、緊急氣切備妥）。';
+  }
+}
+
+function printReport() {
+  const total = Object.values(lemonScores).filter(v=>v!==null).reduce((a,b)=>a+b,0);
+  const badge = document.getElementById('lemon-badge').textContent;
+  const das = document.getElementById('das-summary').textContent;
+  const rec = document.getElementById('recommend-box').innerText;
+  const w = window.open('','_blank','width=600,height=700');
+  w.document.write(`<html><head><title>氣道評估報告</title>
+  <style>body{font-family:sans-serif;padding:32px;color:#111}h2{margin-bottom:4px}hr{margin:16px 0;border:none;border-top:1px solid #ddd}.label{font-size:12px;color:#666;font-family:monospace}.val{font-size:16px;font-weight:500}</style></head>
+  <body><h2>氣道評估報告</h2><p class="label">${new Date().toLocaleString('zh-TW')}</p><hr>
+  <p class="label">LEMON 總分</p><p class="val">${total} / 10 — ${badge}</p><hr>
+  <p class="label">DAS 拔管風險</p><p class="val">${das}</p><hr>
+  <p class="label">建議行動</p><p>${rec}</p>
+  <hr><p style="font-size:11px;color:#999">本報告僅供臨床參考，最終決策由麻醉醫師負責。</p>
+  </body></html>`);
+  w.print();
+}
+</script>
